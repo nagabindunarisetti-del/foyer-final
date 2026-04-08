@@ -1,0 +1,27 @@
+import * as yup from 'yup';
+
+export const loginSchema = yup.object().shape({
+  email: yup
+    .string()
+    .required('Email is required')
+    .email('Invalid email address'),
+  password: yup
+    .string()
+    .required('Password is required')
+    .min(6, 'Password must be at least 6 characters'),
+});
+
+export const signupSchema = yup.object().shape({
+  email: yup
+    .string()
+    .required('Email is required')
+    .email('Invalid email address'),
+  password: yup
+    .string()
+    .required('Password is required')
+    .min(6, 'Password must be at least 6 characters'),
+  role: yup
+    .string()
+    .oneOf(['user', 'admin'], 'Invalid role')
+    .required('Role is required'),
+});
