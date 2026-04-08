@@ -13,11 +13,11 @@ const Home = () => {
   };
 
   return (
-    <Box sx={{ 
-      minHeight: '100vh', 
-      display: 'flex', 
-      flexDirection: 'column', 
-      alignItems: 'center', 
+    <Box sx={{
+      minHeight: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
       justifyContent: 'center',
       bgcolor: '#fcfcfd',
       textAlign: 'center',
@@ -27,18 +27,18 @@ const Home = () => {
         Welcome to <span style={{ color: '#106ebe' }}>F O Y E R</span>
       </Typography>
       <Typography variant="h5" sx={{ color: 'grey.600', mb: 6, fontWeight: 400 }}>
-        You have successfully logged into your account.
+        You have successfully logged into your accountttt.
       </Typography>
-      <Button 
-        variant="contained" 
+      <Button
+        variant="contained"
         onClick={handleLogout}
-        sx={{ 
-          borderRadius: 3, 
-          px: 4, 
-          py: 1.5, 
-          fontWeight: 700, 
+        sx={{
+          borderRadius: 3,
+          px: 4,
+          py: 1.5,
+          fontWeight: 700,
           textTransform: 'none',
-          boxShadow: '0 4px 12px rgba(16, 110, 190, 0.2)' 
+          boxShadow: '0 4px 12px rgba(16, 110, 190, 0.2)'
         }}
       >
         Sign Out
