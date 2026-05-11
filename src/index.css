@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+
 :root {
   /* Primary Scale (#106ebe) */
   --primary-50: #f0f7ff;
@@ -35,7 +38,7 @@
   --neutral-800: #343a40;
   --neutral-900: #212529;
 
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Poppins', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -47,6 +50,10 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  font-family: 'Poppins', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
 a {
@@ -67,9 +74,14 @@ body {
 }
 
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+}
+
+button, input, textarea, select {
+  font-family: 'Poppins', sans-serif;
 }
 
 button {
