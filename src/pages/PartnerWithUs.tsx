@@ -29,7 +29,7 @@ const PartnerWithUs = () => {
   const [error, setError] = useState("");
   const [partnerType, setPartnerType] = useState("home-chef");
 
-  // FIXED: Added check for location.state
+ 
   useEffect(() => {
     if (location.state?.partnerType) {
       setPartnerType(location.state.partnerType);
@@ -311,7 +311,7 @@ const PartnerWithUs = () => {
 
   return (
     <Box sx={{ bgcolor: "#f8f9fa", minHeight: "100vh" }}>
-      {/* SECTION WITH FULL WIDTH BACKGROUND IMAGE */}
+     
       <Box
         sx={{
           backgroundImage: getBackgroundImage(),
@@ -333,7 +333,7 @@ const PartnerWithUs = () => {
         }}
       >
         <Container maxWidth="lg" sx={{ position: "relative", zIndex: 1, py: 4 }}>
-          {/* Header */}
+         
           <Typography
             variant="h4"
             sx={{
@@ -357,7 +357,7 @@ const PartnerWithUs = () => {
             Grow your food business with us
           </Typography>
 
-          {/* Partner Type Selection Cards */}
+         
           <Box
             sx={{
               display: "flex",
@@ -368,9 +368,9 @@ const PartnerWithUs = () => {
             }}
           >
             {[
-              { type: "home-chef", icon: "🏠", label: "Home-Chef" },
-              { type: "cloud-kitchen", icon: "🏭", label: "Cloud Kitchen" },
-              { type: "restaurant", icon: "🍽️", label: "Restaurant" },
+              { type: "home-chef", label: "Home-Chef" },
+              { type: "cloud-kitchen", label: "Cloud Kitchen" },
+              { type: "restaurant",  label: "Restaurant" },
             ].map((partner) => (
               <Box
                 key={partner.type}
@@ -378,7 +378,7 @@ const PartnerWithUs = () => {
                 sx={{
                   textAlign: "center",
                   cursor: "pointer",
-                  p: 2,
+                  p: 1,
                   borderRadius: 3,
                   bgcolor:
                     partnerType === partner.type
@@ -394,9 +394,7 @@ const PartnerWithUs = () => {
                   minWidth: "140px",
                 }}
               >
-                <Typography variant="h3" sx={{ fontSize: "1.8rem" }}>
-                  {partner.icon}
-                </Typography>
+                
                 <Typography
                   variant="subtitle1"
                   sx={{ fontWeight: 600, color: "#ffffff" }}
@@ -407,7 +405,7 @@ const PartnerWithUs = () => {
             ))}
           </Box>
 
-          {/* Paragraph + Form Row */}
+      
           <Box
             sx={{
               display: "flex",
@@ -416,7 +414,7 @@ const PartnerWithUs = () => {
               alignItems: "stretch",
             }}
           >
-            {/* Left - Description Paragraph */}
+           
             <Box sx={{ flex: 1, display: "flex" }}>
               <Box
                 sx={{
@@ -447,7 +445,7 @@ const PartnerWithUs = () => {
               </Box>
             </Box>
 
-            {/* Right - Registration Form */}
+           
             <Box sx={{ flex: 1, display: "flex" }}>
               <Box
                 sx={{
@@ -569,9 +567,9 @@ const PartnerWithUs = () => {
         </Container>
       </Box>
 
-      {/* REST OF THE CONTENT */}
+      
       <Container maxWidth="lg" sx={{ py: 4 }}>
-        {/* 3 Cards Row */}
+      
         <Box
           sx={{
             display: "flex",
@@ -682,7 +680,6 @@ const PartnerWithUs = () => {
           </Box>
         </Box>
 
-        {/* FAQ Section */}
         <Box sx={{ mt: 3 }}>
           <Typography
             variant="h5"
@@ -758,7 +755,6 @@ const PartnerWithUs = () => {
           </Box>
         </Box>
 
-        {/* Support Footer */}
         <Typography
           variant="body2"
           sx={{

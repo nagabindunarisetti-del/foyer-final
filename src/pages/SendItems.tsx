@@ -16,7 +16,7 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogActions,
+ 
   IconButton,
 } from '@mui/material';
 import {
@@ -39,8 +39,7 @@ const SendItems = () => {
   const [category, setCategory] = useState('food');
   const [photoPreviews, setPhotoPreviews] = useState<string[]>([]);
   const [cameraOpen, setCameraOpen] = useState(false);
-  const [replaceConfirmOpen, setReplaceConfirmOpen] = useState(false);
-  const [pendingPhoto, setPendingPhoto] = useState<string | null>(null);
+
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -55,7 +54,7 @@ const SendItems = () => {
     dropAddress: '',
   });
 
-  // Cleanup camera when component unmounts
+  
   useEffect(() => {
     return () => {
       if (streamRef.current) {
@@ -178,7 +177,7 @@ const SendItems = () => {
   return (
     <Box sx={{ bgcolor: '#f8f9fa', minHeight: '100vh', py: 3 }}>
       <Container maxWidth="md">
-        {/* Back Button at Top */}
+      
         <Button
           onClick={handleBack}
           startIcon={<ArrowBack />}
@@ -188,7 +187,7 @@ const SendItems = () => {
           Back
         </Button>
 
-        {/* Header with Icon */}
+      
         <Box sx={{ textAlign: 'center', mb: 3 }}>
           <LocalShipping sx={{ fontSize: 38, color: '#106ebe', mb: 0.5 }} />
           <Typography
@@ -217,7 +216,7 @@ const SendItems = () => {
 
         <Paper sx={{ p: 3, borderRadius: 3, boxShadow: '0 2px 12px rgba(0,0,0,0.04)' }}>
           <form onSubmit={handleSubmit}>
-            {/* Item Details Section */}
+            
             <Box sx={{ mb: 2.5 }}>
               <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1.5, color: '#1a1a1a', display: 'flex', alignItems: 'center', gap: 0.5 }}>
                 <Description sx={{ color: '#106ebe', fontSize: 18 }} />
@@ -282,7 +281,7 @@ const SendItems = () => {
                   </Button>
                 </Box>
                 
-                {/* Multiple Photo Previews */}
+               
                 {photoPreviews.length > 0 && (
                   <Box sx={{ display: 'flex', gap: 1.5, flexWrap: 'wrap', mt: 1.5 }}>
                     {photoPreviews.map((preview, index) => (
@@ -321,10 +320,10 @@ const SendItems = () => {
               </Box>
             </Box>
 
-            {/* Pickup From & Deliver To - Side by Side */}
+            
             <Box sx={{ display: 'flex', gap: 3, flexDirection: { xs: 'column', md: 'row' }, mb: 2.5 }}>
               
-              {/* Pickup From - Left */}
+              
               <Box sx={{ flex: 1 }}>
                 <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1.5, color: '#1a1a1a', display: 'flex', alignItems: 'center', gap: 0.5 }}>
                   <LocationOn sx={{ color: '#106ebe', fontSize: 18 }} />
@@ -378,7 +377,7 @@ const SendItems = () => {
                 />
               </Box>
 
-              {/* Deliver To - Right */}
+              
               <Box sx={{ flex: 1 }}>
                 <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1.5, color: '#1a1a1a', display: 'flex', alignItems: 'center', gap: 0.5 }}>
                   <LocationOn sx={{ color: '#e67e22', fontSize: 18 }} />
@@ -433,7 +432,7 @@ const SendItems = () => {
               </Box>
             </Box>
 
-            {/* Info Chip */}
+          
             <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
               <Chip
                 label="Delivery charges apply based on distance"
@@ -442,7 +441,7 @@ const SendItems = () => {
               />
             </Box>
 
-            {/* Submit Button */}
+            
             <Button
               type="submit"
               fullWidth
@@ -461,7 +460,7 @@ const SendItems = () => {
         </Paper>
       </Container>
 
-      {/* Camera Dialog */}
+     
       <Dialog 
         open={cameraOpen} 
         onClose={closeCamera}
@@ -518,39 +517,8 @@ const SendItems = () => {
         </DialogContent>
       </Dialog>
 
-      {/* Replace Confirmation Dialog (Option C - Not active yet, ready to enable) */}
-      <Dialog
-        open={replaceConfirmOpen}
-        onClose={() => setReplaceConfirmOpen(false)}
-        maxWidth="xs"
-        fullWidth
-      >
-        <DialogTitle>Replace Photo?</DialogTitle>
-        <DialogContent>
-          <Typography variant="body2">
-            You already have a photo. Do you want to replace it with the new one?
-          </Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setReplaceConfirmOpen(false)} size="small">
-            Cancel
-          </Button>
-          <Button 
-            onClick={() => {
-              if (pendingPhoto) {
-                setPhotoPreviews([pendingPhoto]);
-                setPendingPhoto(null);
-              }
-              setReplaceConfirmOpen(false);
-            }} 
-            variant="contained"
-            size="small"
-            sx={{ bgcolor: '#106ebe' }}
-          >
-            Replace
-          </Button>
-        </DialogActions>
-      </Dialog>
+     
+      
     </Box>
   );
 };

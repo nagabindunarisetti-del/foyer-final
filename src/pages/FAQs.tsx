@@ -185,7 +185,7 @@ const FAQs = () => {
     },
   ];
 
-  // Filter FAQs based on search term
+ 
   const filteredCategories = faqCategories
     .map((category) => ({
       ...category,

@@ -4,7 +4,7 @@ const TermsConditions = () => {
   return (
     <Box sx={{ bgcolor: '#f8f9fa', minHeight: '100vh', py: 6 }}>
       <Container maxWidth="lg">
-        {/* Header */}
+        
         <Typography
           variant="h3"
           sx={{
@@ -29,10 +29,10 @@ const TermsConditions = () => {
           Last updated on {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
         </Typography>
 
-        {/* No Paper/Card - Just plain text */}
+       
         <Box sx={{ maxWidth: '900px', mx: 'auto' }}>
           
-          {/* I. Acceptance of terms */}
+        
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, mt: 2 }}>
             I. Acceptance of terms
           </Typography>
@@ -45,7 +45,7 @@ const TermsConditions = () => {
 
           <Divider sx={{ my: 3 }} />
 
-          {/* II. Definitions */}
+          
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, mt: 2 }}>
             II. Definitions
           </Typography>
@@ -67,7 +67,7 @@ const TermsConditions = () => {
 
           <Divider sx={{ my: 3 }} />
 
-          {/* III. Eligibility */}
+         
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, mt: 2 }}>
             III. Eligibility to use the services
           </Typography>
@@ -77,7 +77,7 @@ const TermsConditions = () => {
 
           <Divider sx={{ my: 3 }} />
 
-          {/* IV. Account Registration */}
+         
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, mt: 2 }}>
             IV. Account Registration and Security
           </Typography>
@@ -87,7 +87,7 @@ const TermsConditions = () => {
 
           <Divider sx={{ my: 3 }} />
 
-          {/* V. Orders and Payments */}
+         
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, mt: 2 }}>
             V. Orders and Payments
           </Typography>
@@ -103,7 +103,7 @@ const TermsConditions = () => {
 
           <Divider sx={{ my: 3 }} />
 
-          {/* VI. Delivery and Cancellation */}
+          
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, mt: 2 }}>
             VI. Delivery and Cancellation
           </Typography>
@@ -119,7 +119,7 @@ const TermsConditions = () => {
 
           <Divider sx={{ my: 3 }} />
 
-          {/* VII. User Conduct */}
+          
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, mt: 2 }}>
             VII. User Conduct and Prohibited Activities
           </Typography>
@@ -137,7 +137,7 @@ const TermsConditions = () => {
 
           <Divider sx={{ my: 3 }} />
 
-          {/* VIII. Intellectual Property */}
+         
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, mt: 2 }}>
             VIII. Intellectual Property Rights
           </Typography>
@@ -147,7 +147,7 @@ const TermsConditions = () => {
 
           <Divider sx={{ my: 3 }} />
 
-          {/* IX. Reviews and Ratings */}
+          
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, mt: 2 }}>
             IX. Reviews and Ratings
           </Typography>
@@ -157,7 +157,7 @@ const TermsConditions = () => {
 
           <Divider sx={{ my: 3 }} />
 
-          {/* X. Disclaimer of Warranties */}
+         
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, mt: 2 }}>
             X. Disclaimer of Warranties
           </Typography>
@@ -167,7 +167,7 @@ const TermsConditions = () => {
 
           <Divider sx={{ my: 3 }} />
 
-          {/* XI. Limitation of Liability */}
+         
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, mt: 2 }}>
             XI. Limitation of Liability
           </Typography>
@@ -177,7 +177,7 @@ const TermsConditions = () => {
 
           <Divider sx={{ my: 3 }} />
 
-          {/* XII. Indemnification */}
+        
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, mt: 2 }}>
             XII. Indemnification
           </Typography>
@@ -187,7 +187,7 @@ const TermsConditions = () => {
 
           <Divider sx={{ my: 3 }} />
 
-          {/* XIII. Termination */}
+          
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, mt: 2 }}>
             XIII. Termination
           </Typography>
@@ -197,7 +197,7 @@ const TermsConditions = () => {
 
           <Divider sx={{ my: 3 }} />
 
-          {/* XIV. Governing Law */}
+         
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, mt: 2 }}>
             XIV. Governing Law
           </Typography>
@@ -207,7 +207,7 @@ const TermsConditions = () => {
 
           <Divider sx={{ my: 3 }} />
 
-          {/* XV. Changes to Terms */}
+         
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, mt: 2 }}>
             XV. Changes to Terms
           </Typography>
@@ -217,7 +217,7 @@ const TermsConditions = () => {
 
           <Divider sx={{ my: 3 }} />
 
-          {/* XVI. Contact Information */}
+          
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, mt: 2 }}>
             XVI. Contact Information
           </Typography>

@@ -4,7 +4,7 @@ const PrivacyPolicy = () => {
   return (
     <Box sx={{ bgcolor: '#f8f9fa', minHeight: '100vh', py: 6 }}>
       <Container maxWidth="lg">
-        {/* Header */}
+        
         <Typography
           variant="h3"
           sx={{
@@ -31,7 +31,7 @@ const PrivacyPolicy = () => {
 
         <Box sx={{ maxWidth: '900px', mx: 'auto' }}>
           
-          {/* Applicability and Scope */}
+         
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, mt: 2 }}>
             Applicability and Scope
           </Typography>
@@ -47,7 +47,7 @@ const PrivacyPolicy = () => {
 
           <Divider sx={{ my: 3 }} />
 
-          {/* Permissible Age */}
+         
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, mt: 2 }}>
             Permissible Age
           </Typography>
@@ -57,7 +57,7 @@ const PrivacyPolicy = () => {
 
           <Divider sx={{ my: 3 }} />
 
-          {/* Information We Collect */}
+          
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, mt: 2 }}>
             Information We Collect and How We Use It
           </Typography>
@@ -73,7 +73,7 @@ const PrivacyPolicy = () => {
 
           <Divider sx={{ my: 3 }} />
 
-          {/* Information You Provide */}
+          
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, mt: 2 }}>
             Information You Provide to Us
           </Typography>
@@ -98,7 +98,7 @@ const PrivacyPolicy = () => {
 
           <Divider sx={{ my: 3 }} />
 
-          {/* Automatic Data Collection */}
+          
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, mt: 2 }}>
             Information We Collect Through Automatic Data Collection Technologies
           </Typography>
@@ -117,7 +117,7 @@ const PrivacyPolicy = () => {
 
           <Divider sx={{ my: 3 }} />
 
-          {/* How We Use Information */}
+         
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, mt: 2 }}>
             How We Use the Information We Collect
           </Typography>
@@ -139,7 +139,7 @@ const PrivacyPolicy = () => {
 
           <Divider sx={{ my: 3 }} />
 
-          {/* Sharing Information */}
+          
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, mt: 2 }}>
             How We Share the Information We Collect
           </Typography>
@@ -158,7 +158,7 @@ const PrivacyPolicy = () => {
 
           <Divider sx={{ my: 3 }} />
 
-          {/* Data Storage */}
+          
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, mt: 2 }}>
             Data Storage
           </Typography>
@@ -168,7 +168,7 @@ const PrivacyPolicy = () => {
 
           <Divider sx={{ my: 3 }} />
 
-          {/* Your Information Rights */}
+  
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, mt: 2 }}>
             Your Information Rights
           </Typography>
@@ -181,7 +181,7 @@ const PrivacyPolicy = () => {
 
           <Divider sx={{ my: 3 }} />
 
-          {/* Security */}
+          
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, mt: 2 }}>
             Security: How We Protect Your Information
           </Typography>
@@ -191,7 +191,7 @@ const PrivacyPolicy = () => {
 
           <Divider sx={{ my: 3 }} />
 
-          {/* Third Party Links */}
+         
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, mt: 2 }}>
             Third Party Links and Services
           </Typography>
@@ -201,7 +201,7 @@ const PrivacyPolicy = () => {
 
           <Divider sx={{ my: 3 }} />
 
-          {/* Policy Amendments */}
+         
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, mt: 2 }}>
             Policy Amendments
           </Typography>
@@ -211,7 +211,7 @@ const PrivacyPolicy = () => {
 
           <Divider sx={{ my: 3 }} />
 
-          {/* Data of Minors */}
+        
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, mt: 2 }}>
             Data of Minors
           </Typography>
@@ -221,7 +221,7 @@ const PrivacyPolicy = () => {
 
           <Divider sx={{ my: 3 }} />
 
-          {/* Contact Us */}
+          
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, mt: 2 }}>
             Contact Us
           </Typography>

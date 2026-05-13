@@ -4,7 +4,7 @@ const CancellationRefundPolicy = () => {
   return (
     <Box sx={{ bgcolor: '#f8f9fa', minHeight: '100vh', py: 6 }}>
       <Container maxWidth="lg">
-        {/* Header */}
+        
         <Typography
           variant="h3"
           sx={{
@@ -31,14 +31,14 @@ const CancellationRefundPolicy = () => {
 
         <Box sx={{ maxWidth: '900px', mx: 'auto' }}>
           
-          {/* Introduction */}
+         
           <Typography variant="body2" sx={{ color: '#444', mb: 3, lineHeight: 1.6 }}>
             Any capitalized terms used but not defined herein shall have the meaning assigned to them under the Terms of Use which govern your use of our website www.foyer.app (the "Website") and our 'Foyer' application for mobile and handheld devices (the "App"). The Website and the App are jointly referred to as the "Platform".
           </Typography>
 
           <Divider sx={{ my: 3 }} />
 
-          {/* A. Customer Cancellation */}
+         
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, mt: 2 }}>
             A. Customer Cancellation
           </Typography>
@@ -51,7 +51,7 @@ const CancellationRefundPolicy = () => {
 
           <Divider sx={{ my: 3 }} />
 
-          {/* B. Non-Customer Cancellation */}
+          
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, mt: 2 }}>
             B. Non-Customer Cancellation
           </Typography>
@@ -73,7 +73,7 @@ const CancellationRefundPolicy = () => {
 
           <Divider sx={{ my: 3 }} />
 
-          {/* C. Cancellation policy for Genie / Pickup & Drop */}
+          
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, mt: 2 }}>
             C. Cancellation Policy for Pickup & Drop Services
           </Typography>
@@ -86,7 +86,6 @@ const CancellationRefundPolicy = () => {
 
           <Divider sx={{ my: 3 }} />
 
-          {/* D. Refunds */}
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, mt: 2 }}>
             D. Refunds
           </Typography>
@@ -106,7 +105,7 @@ const CancellationRefundPolicy = () => {
             5. All refund amounts shall be credited to Buyer's account as may be stipulated as per the payment mechanism of Buyer's choice. In case Buyer doesn't choose to credit it to Buyer's wallet with his/her Foyer Account, the estimated timelines are detailed below:
           </Typography>
 
-          {/* Refund Table */}
+       
           <TableContainer component={Paper} sx={{ mb: 3, boxShadow: 'none', border: '1px solid #e0e0e0' }}>
             <Table sx={{ minWidth: 650 }} size="small">
               <TableHead>
@@ -132,7 +131,6 @@ const CancellationRefundPolicy = () => {
 
           <Divider sx={{ my: 3 }} />
 
-          {/* E. Payment at Delivery */}
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, mt: 2 }}>
             E. Payment at Delivery
           </Typography>
@@ -150,7 +148,7 @@ const CancellationRefundPolicy = () => {
 
           <Divider sx={{ my: 3 }} />
 
-          {/* F. Specific Terms for Alcoholic Beverages */}
+        
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, mt: 2 }}>
             F. Specific Terms with respect to Use of Platform for purchase of alcoholic beverages
           </Typography>

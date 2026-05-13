@@ -107,7 +107,7 @@ const JoinAsDeliveryPartner = () => {
   return (
     <Box sx={{ bgcolor: '#f8f9fa', minHeight: '100vh' }}>
       
-      {/* TOP SECTION WITH BACKGROUND IMAGE - NO DARK OVERLAY */}
+      
       <Box sx={{ 
         backgroundImage: 'url("https://media.istockphoto.com/id/1763486134/photo/swiggy-food-delivery-startup-technology-startup-rider-courier-riding-at-sunrise-sunset.jpg?s=612x612&w=0&k=20&c=TeKoGz0JiL-qNaK7-EF3wm5wU-6_O_4jW0x29bBd3fs=")',
         backgroundSize: 'cover',
@@ -116,7 +116,7 @@ const JoinAsDeliveryPartner = () => {
         minHeight: '600px',
       }}>
         <Container maxWidth="lg" sx={{ py: 6 }}>
-          {/* Header */}
+        
           <Box sx={{ textAlign: 'center', mb: 4 }}>
             <Typography
               variant="h4"
@@ -144,10 +144,10 @@ const JoinAsDeliveryPartner = () => {
             </Typography>
           </Box>
 
-          {/* Two Column Layout - Benefits & Form */}
+        
           <Box sx={{ display: 'flex', justifyContent: 'center', gap: 6, flexDirection: { xs: 'column', md: 'row' } }}>
             
-            {/* Left Column - Benefits */}
+            
             <Box sx={{ flex: '0 0 45%', maxWidth: '450px', bgcolor: 'rgba(255,255,255,0.9)', p: 3, borderRadius: 3 }}>
               <Typography variant="h5" sx={{ fontWeight: 700, mb: 3, color: '#1a1a1a' }}>
                 Why partner with Foyer?
@@ -175,7 +175,7 @@ const JoinAsDeliveryPartner = () => {
               </Box>
             </Box>
 
-            {/* Right Column - Form */}
+            
             <Box sx={{ flex: '0 0 45%', maxWidth: '450px', bgcolor: 'white', p: 4, borderRadius: 3, boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
               <Typography variant="h5" sx={{ fontWeight: 700, mb: 3, textAlign: 'center', color: '#1a1a1a' }}>
                 Registration Form
@@ -229,9 +229,9 @@ const JoinAsDeliveryPartner = () => {
         </Container>
       </Box>
 
-      {/* BOTTOM SECTION - Normal Background */}
+     
       <Container maxWidth="lg" sx={{ py: 6 }}>
-        {/* Why Join Section - 4 cards */}
+       
         <Box sx={{ mb: 6 }}>
           <Typography
             variant="h5"
@@ -281,7 +281,7 @@ const JoinAsDeliveryPartner = () => {
           </Box>
         </Box>
 
-        {/* 3 Easy Steps */}
+        
         <Box sx={{ mb: 6 }}>
           <Typography
             variant="h5"
@@ -313,7 +313,7 @@ const JoinAsDeliveryPartner = () => {
           </Box>
         </Box>
 
-        {/* FAQ Section - 2 Columns */}
+      
         <Box sx={{ mb: 6 }}>
           <Typography
             variant="h5"
@@ -363,7 +363,7 @@ const JoinAsDeliveryPartner = () => {
           </Box>
         </Box>
 
-        {/* Support Footer */}
+     
         <Typography variant="body2" sx={{ textAlign: 'center', color: '#666', display: 'block', mt: 4, pb: 4 }}>
           For support, email us at{' '}
           <Typography component="a" href="mailto:partners@foyer.app" sx={{ color: '#106ebe', textDecoration: 'none', fontWeight: 500 }}>

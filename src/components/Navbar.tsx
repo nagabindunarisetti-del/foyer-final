@@ -82,7 +82,7 @@ const Navbar = () => {
               startIcon={<DownloadOutlined sx={{ fontSize: 20 }} />}
               sx={{
                 fontFamily: 'Poppins',
-                color: '#cecece',
+                color: '#ffffff',
                 textTransform: 'none',
                 fontWeight: 500,
                 fontSize: '0.95rem',
@@ -146,7 +146,7 @@ const Navbar = () => {
           </Box>
         </Toolbar>
       </AppBar>
-      <Box sx={{ height: 85 }} />
+      <Box sx={{ height: 65 }} />
     </>
   );
 };
