@@ -46,7 +46,7 @@ const Home = () => {
             <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, flexWrap: 'wrap', mb: 4 }}>
               <Button
                 variant="contained"
-                onClick={() => navigate('/')}
+                onClick={() => navigate('/ordernow')}
                 sx={{
                   bgcolor: '#106ebe',
                   borderRadius: 3,
