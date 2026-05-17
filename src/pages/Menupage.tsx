@@ -1,484 +1,229 @@
 import {
-  Box,
-  Typography,
-  Chip,
-  Button,
-} from "@mui/material";
-
-import {
   useState,
-  useEffect,
+  useEffect
 } from "react";
 
 import {
-  useParams,
-  useNavigate,
+  Box,
+  Typography,
+  Tabs,
+  Tab,
+  useTheme,
+} from "@mui/material";
+
+import {
+  useLocation,   // ✅ added
 } from "react-router-dom";
 
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-
-import { kitchenData } from "../data/kitchenData";
-import { restaurantData } from "../data/restaurantData";
-import { menuData } from "../data/menuData";
-
+import CardComponent from "../components/Card";
+import CloudKitchenCard from "../components/CloudKitchenCard";
 import Cartbar from "../components/Cartbar";
 
-const MenuPage = () => {
-  const { id } = useParams();
+import { housewives } from "../data/housewives";
+import { kitchenData } from "../data/kitchenData";
+import { restaurantData } from "../data/restaurantData";
 
-  const navigate = useNavigate();
+function Ordernow() {
+  const theme = useTheme();
+  const location = useLocation();   // ✅ added
 
-  /* PROVIDER */
+  // ✅ initialize section from router state if available
+  const [section, setSection] = useState<
+    "homeChef" | "cloudKitchen" | "restaurant"
+  >(location.state?.section || "homeChef");
 
-  const allProviders = [
-    ...kitchenData,
-    ...restaurantData,
-  ];
-
-  const provider = allProviders.find(
-    (item) => item.id === Number(id)
-  );
-
-  const menu = menuData[Number(id)];
-
-  /* UNIQUE STORAGE KEY */
-
-  const storageKey = `cart_${id}`;
-
-  /* CART */
-
-  const [cartItems, setCartItems] =
-    useState<any[]>(() => {
-      const savedCart =
-        localStorage.getItem(
-          storageKey
-        );
-
-      return savedCart
-        ? JSON.parse(savedCart)
-        : [];
-    });
-
-  /* SYNC */
+  const [cartItems, setCartItems] = useState<any[]>(() => {
+    const saved = localStorage.getItem("cartItems");
+    return saved ? JSON.parse(saved) : [];
+  });
 
   useEffect(() => {
     const syncCart = () => {
-      const updatedCart =
-        localStorage.getItem(
-          storageKey
-        );
-
-      setCartItems(
-        updatedCart
-          ? JSON.parse(updatedCart)
-          : []
-      );
+      const updatedCart = localStorage.getItem("cartItems");
+      setCartItems(updatedCart ? JSON.parse(updatedCart) : []);
     };
+    window.addEventListener("storage", syncCart);
+    window.addEventListener("cartUpdated", syncCart as EventListener);
 
-    window.addEventListener(
-      "cartUpdated",
-      syncCart as EventListener
-    );
+    syncCart();
 
     return () => {
-      window.removeEventListener(
-        "cartUpdated",
-        syncCart as EventListener
-      );
+      window.removeEventListener("storage", syncCart);
+      window.removeEventListener("cartUpdated", syncCart as EventListener);
     };
-  }, [storageKey]);
+  }, []);
 
-  /* FILTER */
-
-  const [selectedFilter, setSelectedFilter] =
-    useState("All");
-
-  /* ADD */
-
-  const addToCart = (food: any) => {
-    const existingItem =
-      cartItems.find(
-        (item) => item.id === food.id
+  const addToCart = (item: any) => {
+    let updatedCart = [...cartItems];
+    if (section === "homeChef") {
+      const existingItem = updatedCart.find(
+        (cartItem) => cartItem.id === item.id
       );
-
-    let updatedCart;
-
-    if (existingItem) {
-      updatedCart = cartItems.map(
-        (item) =>
-          item.id === food.id
-            ? {
-                ...item,
-                quantity:
-                  item.quantity + 1,
-              }
-            : item
-      );
+      if (existingItem) {
+        updatedCart = updatedCart.map((cartItem) =>
+          cartItem.id === item.id
+            ? { ...cartItem, quantity: cartItem.quantity + 1 }
+            : cartItem
+        );
+      } else {
+        updatedCart = [{ ...item, quantity: 1 }];
+      }
     } else {
-      updatedCart = [
-        ...cartItems,
-
-        {
-          ...food,
-          quantity: 1,
-        },
-      ];
+      const existingItem = updatedCart.find(
+        (cartItem) =>
+          cartItem.id === item.id && cartItem.type === item.type
+      );
+      if (existingItem) {
+        updatedCart = updatedCart.map((cartItem) =>
+          cartItem.id === item.id && cartItem.type === item.type
+            ? { ...cartItem, quantity: cartItem.quantity + 1 }
+            : cartItem
+        );
+      } else {
+        updatedCart = [...updatedCart, { ...item, quantity: 1 }];
+      }
     }
 
     setCartItems(updatedCart);
-
-    /* IMPORTANT */
-
-    localStorage.setItem(
-      storageKey,
-      JSON.stringify(updatedCart)
-    );
-
-    window.dispatchEvent(
-      new Event("cartUpdated")
-    );
+    localStorage.setItem("cartItems", JSON.stringify(updatedCart));
+    window.dispatchEvent(new Event("cartUpdated"));
   };
 
-  /* DELETE */
+  const displayData =
+    section === "homeChef"
+      ? housewives
+      : section === "cloudKitchen"
+      ? kitchenData
+      : restaurantData;
 
-  const handleDelete = (
-    itemId: number
-  ) => {
-    const updatedCart =
-      cartItems
-        .map((item) =>
-          item.id === itemId
-            ? {
-                ...item,
-
-                quantity:
-                  item.quantity - 1,
-              }
-            : item
-        )
-        .filter(
-          (item) =>
-            item.quantity > 0
-        );
-
-    setCartItems(updatedCart);
-
-    /* IMPORTANT */
-
-    localStorage.setItem(
-      storageKey,
-      JSON.stringify(updatedCart)
-    );
-
-    window.dispatchEvent(
-      new Event("cartUpdated")
-    );
-  };
-
-  /* FILTER ITEMS */
-
-  const filteredItems =
-    selectedFilter === "All"
-      ? menu.items
-      : menu.items.filter((food: any) => {
-          if (
-            selectedFilter === "Veg"
-          ) {
-            return food.veg === true;
-          }
-
-          if (
-            selectedFilter ===
-            "Non-Veg"
-          ) {
-            return food.veg === false;
-          }
-
-          if (
-            selectedFilter ===
-            "🥚 Eggetarian"
-          ) {
-            return (
-              food.category === "egg"
-            );
-          }
-
-          if (
-            selectedFilter ===
-            "🌱 Vegan"
-          ) {
-            return (
-              food.category ===
-              "vegan"
-            );
-          }
-
-          if (
-            selectedFilter ===
-            "🌅 Breakfast"
-          ) {
-            return (
-              food.mealType ===
-              "breakfast"
-            );
-          }
-
-          if (
-            selectedFilter ===
-            "🍛 Lunch"
-          ) {
-            return (
-              food.mealType ===
-              "lunch"
-            );
-          }
-
-          if (
-            selectedFilter ===
-            "🌙 Dinner"
-          ) {
-            return (
-              food.mealType ===
-              "dinner"
-            );
-          }
-
-          if (
-            selectedFilter ===
-            "🥨 Snacks"
-          ) {
-            return (
-              food.mealType ===
-              "snacks"
-            );
-          }
-
-          if (
-            selectedFilter ===
-            "🍮 Dessert"
-          ) {
-            return (
-              food.mealType ===
-              "dessert"
-            );
-          }
-
-          return true;
-        });
-
-  if (!provider || !menu) {
-    return (
-      <Typography p={4}>
-        Data not found
-      </Typography>
-    );
-  }
+  const tabStyles = (value: string) => ({
+    minHeight: "42px",
+    minWidth: value === "cloudKitchen" ? "150px" : "130px",
+    px: 2.5,
+    mr: 1,
+    mb: 1,
+    borderRadius: "14px",
+    textTransform: "none",
+    fontWeight: 700,
+    fontSize: { xs: "12px", sm: "13px" },
+    backgroundColor: "#fff",
+    color: "#666",
+    border: "none !important",
+    outline: "none !important",
+    boxShadow: "none !important",
+    "&.Mui-selected": {
+      backgroundColor: theme.palette.primary.main,
+      color: "#fff",
+      boxShadow: `0 6px 18px ${theme.palette.primary.main}35`,
+    },
+    "&:hover": {
+      backgroundColor:
+        value === section ? theme.palette.primary.main : "#fafafa",
+      color: value === section ? "#fff" : "#666",
+    },
+    "& .MuiTouchRipple-root": {
+      display: "none",
+    },
+  });
 
   return (
-    <Box p={4}>
-      {/* BACK */}
-
-      <Button
-        startIcon={<ArrowBackIcon />}
-        variant="outlined"
-        onClick={() => navigate(-1)}
+    <Box
+      sx={{
+        width: "100%",
+        minHeight: "100vh",
+        backgroundColor: theme.palette.background.default,
+        px: { xs: 2, md: 6 },
+        py: { xs: 2, md: 3 },
+        pb: 12,
+        overflowX: "hidden",
+      }}
+    >
+      <Typography
         sx={{
+          fontSize: { xs: "26px", md: "38px" },
+          fontWeight: 800,
           mb: 3,
-
-          borderRadius: 3,
-
-          textTransform: "none",
-
-          fontWeight: 700,
-
-          px: 2.5,
-
-          py: 1,
         }}
       >
-        Back
-      </Button>
+        Order Fresh Food
+      </Typography>
 
-      {/* HEADER */}
-
-      <Box mb={4}>
-        <img
-          src={provider.image}
-          alt={provider.name}
-          style={{
-            width: "100%",
-
-            height: "320px",
-
-            objectFit: "cover",
-
-            borderRadius: "20px",
+      <Box sx={{ mb: 4, width: "100%" }}>
+        <Tabs
+          value={section}
+          onChange={(_, v) => setSection(v)}
+          variant="standard"
+          sx={{
+            minHeight: "44px",
+            "& .MuiTabs-indicator": { display: "none" },
+            "& .MuiTabs-flexContainer": {
+              flexWrap: "wrap",
+              alignItems: "center",
+            },
+            "& .MuiTab-root": { outline: "none", border: "none" },
           }}
-        />
-
-        <Typography
-          variant="h3"
-          fontWeight={800}
-          mt={2}
         >
-          {provider.name}
-        </Typography>
-
-        <Typography mt={1}>
-          {provider.cuisine}
-        </Typography>
-
-        <Typography mt={1}>
-          ⭐ {provider.rating}
-          {" • "}
-          {provider.deliveryTime}
-        </Typography>
+          <Tab value="homeChef" label="Home Chefs" sx={tabStyles("homeChef")} />
+          <Tab
+            value="cloudKitchen"
+            label="Cloud Kitchens"
+            sx={tabStyles("cloudKitchen")}
+          />
+          <Tab
+            value="restaurant"
+            label="Restaurants"
+            sx={tabStyles("restaurant")}
+          />
+        </Tabs>
       </Box>
-
-      {/* FILTERS */}
-
-      <Box
-        display="flex"
-        gap={1}
-        flexWrap="wrap"
-        mb={4}
-      >
-        {menu.filters
-          .filter(
-            (filter) =>
-              filter !== "🍽️ All"
-          )
-          .map((filter) => (
-            <Chip
-              key={filter}
-              label={filter}
-              clickable
-              color={
-                selectedFilter === filter
-                  ? "primary"
-                  : "default"
-              }
-              onClick={() =>
-                setSelectedFilter(filter)
-              }
-            />
-          ))}
-      </Box>
-
-      {/* MENU */}
 
       <Typography
-        variant="h5"
-        fontWeight={700}
-        mb={2}
+        sx={{
+          fontSize: { xs: "20px", md: "28px" },
+          fontWeight: 700,
+          mb: 3,
+        }}
       >
-        Menu
+        {section === "homeChef" && "Home Chefs"}
+        {section === "cloudKitchen" && "Cloud Kitchens"}
+        {section === "restaurant" && "Restaurants"}
       </Typography>
 
       <Box
-        display="grid"
-        gridTemplateColumns="
-          repeat(auto-fit,minmax(280px,1fr))
-        "
-        gap={3}
+        sx={{
+          display: "grid",
+          width: "100%",
+          gridTemplateColumns:
+            section === "homeChef"
+              ? { xs: "repeat(2, 1fr)", sm: "repeat(3, 1fr)", md: "repeat(5, 1fr)" }
+              : { xs: "repeat(1, 1fr)", sm: "repeat(2, 1fr)", md: "repeat(3, 1fr)" },
+          gap: { xs: 1.5, sm: 2, md: 3 },
+          alignItems: "stretch",
+          overflow: "hidden",
+        }}
       >
-        {filteredItems.map((food) => {
-          const existingItem =
-            cartItems.find(
-              (item) =>
-                item.id === food.id
-            );
-
-          return (
-            <Box
-              key={food.id}
-              sx={{
-                border:
-                  "1px solid #eee",
-
-                borderRadius: 4,
-
-                overflow: "hidden",
-
-                background: "#fff",
-              }}
-            >
-              <img
-                src={food.image}
-                alt={food.name}
-                style={{
-                  width: "100%",
-
-                  height: "220px",
-
-                  objectFit: "cover",
-                }}
-              />
-
-              <Box p={2}>
-                <Typography
-                  fontWeight={700}
-                  fontSize={20}
-                >
-                  {food.name}
-                </Typography>
-
-                <Typography
-                  color="text.secondary"
-                  mb={1}
-                >
-                  {food.desc}
-                </Typography>
-
-                <Typography fontWeight={700}>
-                  ₹ {food.price}
-                </Typography>
-
-                {!existingItem ? (
-                  <Button
-                    variant="contained"
-                    sx={{
-                      mt: 2,
-                      borderRadius: 3,
-                    }}
-                    onClick={() =>
-                      addToCart(food)
-                    }
-                  >
-                    Add to Cart
-                  </Button>
-                ) : (
-                  <Button
-                    color="error"
-                    variant="outlined"
-                    sx={{
-                      mt: 2,
-                      borderRadius: 3,
-                    }}
-                    onClick={() =>
-                      handleDelete(food.id)
-                    }
-                  >
-                    Delete
-                  </Button>
-                )}
-              </Box>
-            </Box>
-          );
-        })}
+        {displayData.map((item) => (
+          <Box
+            key={`${item.type}-${item.id}`}
+            sx={{
+              width: "100%",
+              minWidth: 0,
+              overflow: "hidden",
+              display: "flex",
+            }}
+          >
+            {section === "homeChef" ? (
+              <CardComponent item={item} onAdd={addToCart} />
+            ) : (
+              <CloudKitchenCard item={item} />
+            )}
+          </Box>
+        ))}
       </Box>
 
-      {/* CARTBAR */}
-
-      <Cartbar
-        cartItems={cartItems}
-        setCartItems={
-          setCartItems
-        }
-        storageKey={storageKey}
-      />
+      <Cartbar cartItems={cartItems} setCartItems={setCartItems} />
     </Box>
   );
-};
+}
 
-export default MenuPage;
+export default Ordernow;

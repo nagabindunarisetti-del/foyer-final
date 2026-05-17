@@ -1,5 +1,3 @@
-
-
 import {
   Card,
   CardMedia,
@@ -14,21 +12,63 @@ import StarIcon from "@mui/icons-material/Star";
 
 import { useNavigate } from "react-router-dom";
 
+import { useState } from "react";
+
 function FoodCard({
   item,
-  onAdd
+  onAdd,
 }) {
 
   const theme = useTheme();
 
   const navigate = useNavigate();
 
+  /* LOCAL STATE */
+
+  const [isAdded, setIsAdded] =
+    useState(false);
+
+  /* HANDLE ADD */
+
+  const handleAdd = (e) => {
+
+    e.stopPropagation();
+
+    /* RESET ALL BUTTONS */
+
+    window.dispatchEvent(
+      new Event("resetFoodButtons")
+    );
+
+    /* CURRENT BUTTON ADDED */
+
+    setIsAdded(true);
+
+    onAdd?.({
+      ...item,
+      quantity: 1,
+    });
+  };
+
+  /* LISTEN RESET */
+
+  window.addEventListener(
+    "resetFoodButtons",
+    () => {
+      setIsAdded(false);
+    }
+  );
+
   return (
+
     <Card
       onClick={() =>
-        navigate(`/menu/${item.id}`, {
-          state: { item },
-        })
+        navigate(
+          `/menu/${item.id}`,
+          {
+            state: { item },
+          }
+        )
       }
       sx={{
         width: 208,
@@ -51,7 +91,8 @@ function FoodCard({
           "0 4px 12px rgba(0,0,0,0.06)",
 
         "&:hover": {
-          transform: "translateY(-4px)",
+          transform:
+            "translateY(-4px)",
 
           boxShadow:
             `0 10px 24px ${theme.palette.primary.main}20`,
@@ -62,7 +103,7 @@ function FoodCard({
       }}
     >
 
-      
+      {/* IMAGE */}
 
       <Box
         sx={{
@@ -77,7 +118,7 @@ function FoodCard({
           alt={item.name}
         />
 
-        
+        {/* RATING */}
 
         <Box
           sx={{
@@ -125,9 +166,10 @@ function FoodCard({
           </Typography>
 
         </Box>
+
       </Box>
 
-      
+      {/* CONTENT */}
 
       <CardContent
         sx={{
@@ -138,6 +180,9 @@ function FoodCard({
           },
         }}
       >
+
+        {/* NAME */}
+
         <Typography
           sx={{
             fontSize: "13px",
@@ -154,6 +199,9 @@ function FoodCard({
         >
           {item.name}
         </Typography>
+
+        {/* COOK NAME */}
+
         <Typography
           sx={{
             fontSize: "10px",
@@ -169,7 +217,9 @@ function FoodCard({
           {item.cookName}
         </Typography>
 
-          <Typography
+        {/* DESCRIPTION */}
+
+        <Typography
           sx={{
             fontSize: "10px",
 
@@ -190,6 +240,9 @@ function FoodCard({
         >
           {item.description}
         </Typography>
+
+        {/* PRICE + BUTTON */}
+
         <Box
           mt={0.7}
           sx={{
@@ -201,6 +254,9 @@ function FoodCard({
             alignItems: "center",
           }}
         >
+
+          {/* PRICE */}
+
           <Typography
             sx={{
               fontSize: "14px",
@@ -215,14 +271,14 @@ function FoodCard({
           >
             ₹{item.price}
           </Typography>
+
+          {/* BUTTON */}
+
           <Button
             size="small"
             variant="contained"
 
-            onClick={(e) => {
-              e.stopPropagation();
-              onAdd?.(item);
-            }}
+            onClick={handleAdd}
 
             sx={{
               fontSize: "10px",
@@ -234,11 +290,12 @@ function FoodCard({
               minHeight: "26px",
 
               backgroundColor:
-                theme.palette.primary.main,
+                isAdded
+                  ? theme.palette.success.main
+                  : theme.palette.primary.main,
 
               color:
-                theme.palette.primary
-                  .contrastText,
+                "#fff",
 
               borderRadius: 2,
 
@@ -248,18 +305,23 @@ function FoodCard({
 
               "&:hover": {
                 backgroundColor:
-                  theme.palette.primary.dark,
+                  isAdded
+                    ? theme.palette.success.dark
+                    : theme.palette.primary.dark,
 
-                boxShadow:
-                  `0 4px 10px ${theme.palette.primary.main}40`,
+                boxShadow: "none",
               },
             }}
           >
-            Add
+            {isAdded
+              ? "Added"
+              : "Add"}
           </Button>
 
         </Box>
+
       </CardContent>
+
     </Card>
   );
 }

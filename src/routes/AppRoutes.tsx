@@ -66,8 +66,10 @@ const AppRoutes = () => {
         />
 
         <Route path="/cart" element={<Cart />} />
-        <Route path="/vieworders" element={<Vieworder />} />
-        <Route path="/vieworders/:section" element={<Vieworder />}/>
+        <Route
+  path="/vieworder/:section?"
+  element={<Vieworder />}
+/>
         <Route path="/menu/:id" element={<MenuPage />} />
         <Route path="/ordernow" element={<Ordernow />} />
 

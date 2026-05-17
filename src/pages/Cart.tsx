@@ -113,12 +113,66 @@ function Cart() {
             Object.keys(newErrors).length === 0
         );
     };
-    const handlePlaceOrder = () => {
+   const handlePlaceOrder = () => {
 
-        if (validateForm()) {
-            setOrderSuccess(true);
-        }
-    };
+    if (validateForm()) {
+
+        /* GET OLD ORDERS */
+
+        const existingOrders =
+            JSON.parse(
+                localStorage.getItem(
+                    "orders"
+                ) || "[]"
+            );
+
+        /* CREATE NEW ORDERS */
+
+        const newOrders =
+            cartItems.map((item) => ({
+                ...item,
+
+                quantity:
+                    item.quantity || 1,
+
+                orderDate:
+                    new Date().toLocaleDateString(),
+
+                orderTime:
+                    new Date().toLocaleTimeString(),
+            }));
+
+        /* SAVE OLD + NEW */
+
+        const updatedOrders = [
+            ...existingOrders,
+            ...newOrders,
+        ];
+
+        localStorage.setItem(
+            "orders",
+            JSON.stringify(updatedOrders)
+        );
+
+        /* CLEAR CART */
+
+        localStorage.removeItem(
+            "cartItems"
+        );
+
+        setCartItems([]);
+
+        /* UPDATE CART BAR */
+
+        window.dispatchEvent(
+            new Event("cartUpdated")
+        );
+
+        /* SHOW SUCCESS */
+
+        setOrderSuccess(true);
+    }
+};
 
     return (
         <Box
@@ -1178,7 +1232,7 @@ function Cart() {
                         <Button
                             fullWidth
                             onClick={() =>
-                                navigate("/vieworders")
+                                navigate("/vieworder/orders")
                             }
                             sx={{
                                 background:

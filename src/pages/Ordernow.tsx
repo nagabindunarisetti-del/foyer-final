@@ -9,7 +9,14 @@ import {
   Tabs,
   Tab,
   useTheme,
+  Button,
 } from "@mui/material";
+
+import {
+  useNavigate,
+} from "react-router-dom";
+
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 import CardComponent from "../components/Card";
 import CloudKitchenCard from "../components/CloudKitchenCard";
@@ -23,11 +30,14 @@ function Ordernow() {
 
   const theme = useTheme();
 
+  const navigate = useNavigate();
+
   const [section, setSection] = useState<
     "homeChef" |
     "cloudKitchen" |
     "restaurant"
   >("homeChef");
+
   const [cartItems, setCartItems] =
     useState<any[]>(() => {
 
@@ -40,6 +50,7 @@ function Ordernow() {
         ? JSON.parse(saved)
         : [];
     });
+
   useEffect(() => {
 
     const syncCart = () => {
@@ -55,10 +66,12 @@ function Ordernow() {
           : []
       );
     };
+
     window.addEventListener(
       "storage",
       syncCart
     );
+
     window.addEventListener(
       "cartUpdated",
       syncCart as EventListener
@@ -80,15 +93,19 @@ function Ordernow() {
     };
 
   }, []);
+
   const addToCart = (item: any) => {
 
     let updatedCart = [...cartItems];
+
     if (section === "homeChef") {
+
       const existingItem =
         updatedCart.find(
           (cartItem) =>
             cartItem.id === item.id
         );
+
       if (existingItem) {
 
         updatedCart = updatedCart.map(
@@ -105,8 +122,8 @@ function Ordernow() {
 
               : cartItem
         );
-      }
-      else {
+
+      } else {
 
         updatedCart = [
           {
@@ -116,8 +133,8 @@ function Ordernow() {
           },
         ];
       }
-    }
-    else {
+
+    } else {
 
       const existingItem =
         updatedCart.find(
@@ -127,6 +144,7 @@ function Ordernow() {
 
             cartItem.type === item.type
         );
+
       if (existingItem) {
 
         updatedCart = updatedCart.map(
@@ -145,8 +163,8 @@ function Ordernow() {
 
               : cartItem
         );
-      }
-      else {
+
+      } else {
 
         updatedCart = [
           ...updatedCart,
@@ -171,12 +189,14 @@ function Ordernow() {
       new Event("cartUpdated")
     );
   };
+
   const displayData =
     section === "homeChef"
       ? housewives
       : section === "cloudKitchen"
       ? kitchenData
       : restaurantData;
+
   const tabStyles = (
     value: string
   ) => ({
@@ -267,6 +287,34 @@ function Ordernow() {
         overflowX: "hidden",
       }}
     >
+
+      {/* BACK BUTTON */}
+
+      <Button
+        startIcon={<ArrowBackIcon />}
+        variant="outlined"
+        onClick={() =>
+          navigate("/")
+        }
+        sx={{
+          mb: 3,
+
+          borderRadius: 3,
+
+          textTransform: "none",
+
+          fontWeight: 700,
+
+          px: 2.5,
+
+          py: 1,
+        }}
+      >
+        Back To Home
+      </Button>
+
+      {/* TITLE */}
+
       <Typography
         sx={{
           fontSize: {
@@ -281,6 +329,8 @@ function Ordernow() {
       >
         Order Fresh Food
       </Typography>
+
+      {/* TABS */}
 
       <Box
         sx={{
@@ -347,6 +397,8 @@ function Ordernow() {
 
       </Box>
 
+      {/* SECTION TITLE */}
+
       <Typography
         sx={{
           fontSize: {
@@ -370,6 +422,8 @@ function Ordernow() {
           "Restaurants"}
 
       </Typography>
+
+      {/* CARDS */}
 
       <Box
         sx={{
@@ -428,12 +482,14 @@ function Ordernow() {
               <CardComponent
                 item={item}
                 onAdd={addToCart}
+                section={section}
               />
 
             ) : (
 
               <CloudKitchenCard
                 item={item}
+                section={section}
               />
 
             )}
@@ -444,6 +500,7 @@ function Ordernow() {
 
       </Box>
 
+      {/* CARTBAR */}
 
       <Cartbar
         cartItems={cartItems}

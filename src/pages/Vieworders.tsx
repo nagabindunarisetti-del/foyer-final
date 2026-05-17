@@ -13,7 +13,6 @@ import {
   CardContent,
   Grid,
   IconButton,
-  Chip,
   Snackbar,
   Alert,
   useTheme,
@@ -34,19 +33,15 @@ const Vieworder = () => {
 
   const navigate = useNavigate();
 
-  /* GET SECTION FROM URL */
-
   const { section } =
     useParams();
 
-  /* ACTIVE TAB */
+  /* DEFAULT OPEN ORDERS TAB */
 
   const [active, setActive] =
     useState(
-      section || "profile"
+      section || "orders"
     );
-
-  /* UPDATE ACTIVE TAB */
 
   useEffect(() => {
 
@@ -57,7 +52,7 @@ const Vieworder = () => {
 
   }, [section]);
 
-  /* PROFILE FORM */
+  /* PROFILE */
 
   const [formData, setFormData] =
     useState({
@@ -75,15 +70,14 @@ const Vieworder = () => {
 
     const savedOrders =
       localStorage.getItem(
-        "cartItems"
+        "orders"
       );
 
     if (savedOrders) {
 
-      const parsedOrders =
-        JSON.parse(savedOrders);
-
-      setOrders(parsedOrders);
+      setOrders(
+        JSON.parse(savedOrders)
+      );
     }
 
   }, []);
@@ -167,12 +161,16 @@ const Vieworder = () => {
     <Box
       sx={{
         minHeight: "100vh",
+
         backgroundColor:
           theme.palette.background.default,
+
         display: "flex",
-        alignItems: "center",
+
         justifyContent: "center",
+
         px: 2,
+
         py: 4,
       }}
     >
@@ -180,15 +178,20 @@ const Vieworder = () => {
       <Box
         sx={{
           width: "100%",
-          maxWidth: 850,
+
+          maxWidth: 900,
+
           backgroundColor:
             theme.palette.background.paper,
+
           borderRadius: 4,
+
           p: {
             xs: 2,
             sm: 3,
             md: 4,
           },
+
           boxShadow:
             "0 8px 30px rgba(0,0,0,0.06)",
         }}
@@ -199,21 +202,27 @@ const Vieworder = () => {
         <Box
           sx={{
             display: "flex",
+
             justifyContent:
               "space-between",
+
             alignItems: "center",
-            mb: 2,
+
             flexWrap: "wrap",
+
             gap: 2,
+
+            mb: 3,
           }}
         >
 
           <Box>
 
             <Typography
-              variant="h5"
+              variant="h4"
               sx={{
                 fontWeight: 700,
+
                 color:
                   theme.palette.grey[900],
               }}
@@ -223,12 +232,14 @@ const Vieworder = () => {
 
             <Typography
               sx={{
-                fontSize: "13px",
                 color:
                   theme.palette.grey[600],
+
+                mt: 0.5,
               }}
             >
-              Manage your details and orders
+              Manage your profile,
+              orders, and addresses.
             </Typography>
 
           </Box>
@@ -241,8 +252,8 @@ const Vieworder = () => {
             }
             sx={{
               borderRadius: 3,
+
               textTransform: "none",
-              fontWeight: 600,
             }}
           >
             Back to Home
@@ -255,13 +266,17 @@ const Vieworder = () => {
         <Box
           sx={{
             display: "flex",
+
             gap: 1,
+
             mb: 3,
+
             backgroundColor:
               theme.palette.grey[100],
+
             p: 0.7,
+
             borderRadius: 3,
-            flexWrap: "wrap",
           }}
         >
 
@@ -278,9 +293,6 @@ const Vieworder = () => {
                 setActive(item)
               }
               sx={{
-                flex: 1,
-                minWidth: "100px",
-
                 backgroundColor:
                   active === item
                     ? theme.palette
@@ -295,6 +307,15 @@ const Vieworder = () => {
                     : theme.palette
                         .grey[700],
 
+                textTransform:
+                  "capitalize",
+
+                borderRadius: 2,
+
+                py: 1,
+
+                fontWeight: 600,
+
                 "&:hover": {
                   backgroundColor:
                     active === item
@@ -303,13 +324,6 @@ const Vieworder = () => {
                       : theme.palette
                           .grey[200],
                 },
-
-                fontSize: "13px",
-                py: 1,
-                borderRadius: 2,
-                fontWeight: 600,
-                textTransform:
-                  "capitalize",
               }}
             >
               {item}
@@ -327,7 +341,9 @@ const Vieworder = () => {
             elevation={0}
             sx={{
               p: 3,
+
               borderRadius: 3,
+
               border:
                 `1px solid ${theme.palette.grey[200]}`,
             }}
@@ -336,20 +352,14 @@ const Vieworder = () => {
             <Typography
               sx={{
                 mb: 3,
-                fontWeight: 600,
-                color:
-                  theme.palette.grey[800],
+
+                fontWeight: 700,
               }}
             >
               Personal Details
             </Typography>
 
-            <Typography
-              sx={{
-                mb: 1,
-                fontSize: "14px",
-              }}
-            >
+            <Typography sx={{ mb: 1 }}>
               Full Name
             </Typography>
 
@@ -358,16 +368,10 @@ const Vieworder = () => {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              placeholder="Enter your name"
               sx={{ mb: 2 }}
             />
 
-            <Typography
-              sx={{
-                mb: 1,
-                fontSize: "14px",
-              }}
-            >
+            <Typography sx={{ mb: 1 }}>
               Email
             </Typography>
 
@@ -376,23 +380,16 @@ const Vieworder = () => {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              placeholder="Enter your email"
               sx={{ mb: 2 }}
             />
 
-            <Typography
-              sx={{
-                mb: 1,
-                fontSize: "14px",
-              }}
-            >
+            <Typography sx={{ mb: 1 }}>
               Mobile Number
             </Typography>
 
             <TextField
               fullWidth
               value={formData.mobile}
-              placeholder="Enter mobile number"
               onChange={(e) => {
 
                 const value =
@@ -416,10 +413,6 @@ const Vieworder = () => {
             <Button
               variant="contained"
               onClick={handleSave}
-              sx={{
-                px: 3,
-                py: 1,
-              }}
             >
               Save Changes
             </Button>
@@ -431,133 +424,140 @@ const Vieworder = () => {
 
         {active === "orders" && (
 
-          <Grid container spacing={2}>
+          <Paper
+            elevation={0}
+            sx={{
+              p: 3,
+
+              borderRadius: 3,
+
+              border:
+                `1px solid ${theme.palette.grey[200]}`,
+            }}
+          >
+
+            <Typography
+              sx={{
+                fontWeight: 700,
+
+                mb: 3,
+
+                color:
+                  theme.palette.grey[900],
+
+                fontSize: "22px",
+              }}
+            >
+              Past Orders
+            </Typography>
 
             {orders.length > 0 ? (
 
-              orders.map((order, index) => (
+              [...orders]
+                .reverse()
+                .map(
+                  (
+                    order,
+                    index
+                  ) => (
 
-                <Grid
-                  item
-                  xs={12}
-                  key={index}
-                >
+                    <Box
+                      key={index}
+                      sx={{
+                        py: 2,
 
-                  <Card
-                    sx={{
-                      borderRadius: 3,
-                      border:
-                        `1px solid ${theme.palette.grey[200]}`,
-                      boxShadow: "none",
-                    }}
-                  >
+                        borderBottom:
+                          index !==
+                          orders.length - 1
+                            ? `1px solid ${theme.palette.grey[200]}`
+                            : "none",
 
-                    <CardContent>
+                        display: "flex",
 
-                      <Box
-                        sx={{
-                          display: "flex",
-                          gap: 2,
-                          alignItems:
-                            "center",
-                          flexWrap: "wrap",
-                        }}
-                      >
+                        justifyContent:
+                          "space-between",
 
-                        {/* IMAGE */}
+                        alignItems:
+                          "center",
 
-                        <Box
-                          component="img"
-                          src={
-                            order.image ||
-                            "https://via.placeholder.com/100"
-                          }
-                          alt={order.name}
+                        gap: 2,
+                      }}
+                    >
+
+                      {/* LEFT */}
+
+                      <Box>
+
+                        <Typography
                           sx={{
-                            width: 100,
-                            height: 100,
-                            borderRadius: 3,
-                            objectFit:
-                              "cover",
+                            fontWeight: 700,
+
+                            fontSize:
+                              "18px",
+
+                            color:
+                              theme.palette
+                                .grey[900],
                           }}
-                        />
+                        >
+                          {order.name}
+                          {" "}
+                          ×
+                          {order.quantity || 1}
+                        </Typography>
 
-                        {/* DETAILS */}
+                        <Typography
+                          sx={{
+                            mt: 0.5,
 
-                        <Box sx={{ flex: 1 }}>
+                            fontSize:
+                              "13px",
 
-                          <Typography
-                            sx={{
-                              fontWeight: 700,
-                              color:
-                                theme.palette
-                                  .grey[900],
-                            }}
-                          >
-                            {order.name}
-                          </Typography>
-
-                          <Typography
-                            sx={{
-                              mt: 1,
-                              color:
-                                theme.palette
-                                  .grey[600],
-                            }}
-                          >
-                            Quantity:
-                            {" "}
-                            {order.quantity}
-                          </Typography>
-
-                          <Typography
-                            sx={{
-                              mt: 1,
-                              fontWeight: 700,
-                              color:
-                                theme.palette
-                                  .primary.main,
-                            }}
-                          >
-                            ₹
-                            {" "}
-                            {order.price}
-                          </Typography>
-
-                          <Chip
-                            label="Order Placed"
-                            size="small"
-                            sx={{
-                              mt: 2,
-                              backgroundColor:
-                                theme.palette
-                                  .secondary
-                                  .light,
-                              color:
-                                theme.palette
-                                  .secondary
-                                  .contrastText,
-                              fontWeight: 600,
-                            }}
-                          />
-
-                        </Box>
+                            color:
+                              theme.palette
+                                .grey[600],
+                          }}
+                        >
+                          {order.orderDate}
+                          {" "}
+                          at
+                          {" "}
+                          {order.orderTime}
+                        </Typography>
 
                       </Box>
 
-                    </CardContent>
+                      {/* RIGHT */}
 
-                  </Card>
+                      <Typography
+                        sx={{
+                          fontWeight: 700,
 
-                </Grid>
-              ))
+                          color:
+                            theme.palette
+                              .error.main,
+
+                          fontSize:
+                            "18px",
+                        }}
+                      >
+                        ₹
+                        {order.price *
+                          (order.quantity || 1)}
+                      </Typography>
+
+                    </Box>
+
+                  )
+                )
 
             ) : (
 
               <Typography
                 sx={{
-                  ml: 2,
-                  mt: 2,
+                  color:
+                    theme.palette
+                      .grey[600],
                 }}
               >
                 No Orders Found
@@ -565,7 +565,7 @@ const Vieworder = () => {
 
             )}
 
-          </Grid>
+          </Paper>
         )}
 
         {/* ADDRESSES */}
@@ -576,7 +576,9 @@ const Vieworder = () => {
             elevation={0}
             sx={{
               p: 3,
+
               borderRadius: 3,
+
               border:
                 `1px solid ${theme.palette.grey[200]}`,
             }}
@@ -585,9 +587,8 @@ const Vieworder = () => {
             <Typography
               sx={{
                 mb: 3,
-                fontWeight: 600,
-                color:
-                  theme.palette.grey[800],
+
+                fontWeight: 700,
               }}
             >
               Saved Addresses
@@ -596,8 +597,11 @@ const Vieworder = () => {
             <Box
               sx={{
                 display: "flex",
+
                 gap: 1,
+
                 mb: 3,
+
                 flexDirection: {
                   xs: "column",
                   sm: "row",
@@ -620,9 +624,6 @@ const Vieworder = () => {
               <Button
                 variant="contained"
                 onClick={addAddress}
-                sx={{
-                  minWidth: 100,
-                }}
               >
                 Add
               </Button>
@@ -632,7 +633,10 @@ const Vieworder = () => {
             <Grid container spacing={2}>
 
               {addresses.map(
-                (addr, index) => (
+                (
+                  addr,
+                  index
+                ) => (
 
                   <Grid
                     item
@@ -643,8 +647,10 @@ const Vieworder = () => {
                     <Card
                       sx={{
                         borderRadius: 3,
+
                         border:
                           `1px solid ${theme.palette.grey[200]}`,
+
                         boxShadow:
                           "none",
                       }}
@@ -653,8 +659,10 @@ const Vieworder = () => {
                       <CardContent
                         sx={{
                           display: "flex",
+
                           alignItems:
                             "center",
+
                           gap: 2,
                         }}
                       >
@@ -663,7 +671,8 @@ const Vieworder = () => {
                           sx={{
                             color:
                               theme.palette
-                                .primary.main,
+                                .primary
+                                .main,
                           }}
                         />
 
@@ -671,9 +680,7 @@ const Vieworder = () => {
 
                           <Typography
                             sx={{
-                              fontWeight: 600,
-                              fontSize:
-                                "14px",
+                              fontWeight: 700,
                             }}
                           >
                             Home
@@ -684,8 +691,9 @@ const Vieworder = () => {
                               color:
                                 theme.palette
                                   .grey[600],
+
                               fontSize:
-                                "13px",
+                                "14px",
                             }}
                           >
                             {addr}
