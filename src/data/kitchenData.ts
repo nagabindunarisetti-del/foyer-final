@@ -2,13 +2,13 @@ export const kitchenData = [
   {
     id: 1,
     type: "cloudKitchen",
-    name: "Spice Route Cloud Kitchen",
+    name: "Spice  Cloud Kitchen",
     image: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092",
     cuisine: "North Indian, Mughlai",
     tagline: "Royal flavors, delivered hot",
     rating: 4.5,
     deliveryTime: "30–35 min",
-    priceForTwo: 350,
+    
   },
   {
     id: 2,
@@ -19,7 +19,7 @@ export const kitchenData = [
     tagline: "Every grain tells a story",
     rating: 4.6,
     deliveryTime: "25–30 min",
-    priceForTwo: 400,
+    
   },
   {
     id: 3,
@@ -30,7 +30,7 @@ export const kitchenData = [
     tagline: "Fast wok, bold flavors",
     rating: 4.3,
     deliveryTime: "20–25 min",
-    priceForTwo: 300,
+   
   },
   {
     id: 4,
@@ -41,7 +41,7 @@ export const kitchenData = [
     tagline: "Eat clean. Feel light.",
     rating: 4.4,
     deliveryTime: "30–35 min",
-    priceForTwo: 280,
+    
   },
   {
     id: 5,
@@ -52,7 +52,7 @@ export const kitchenData = [
     tagline: "Comfort in every bite",
     rating: 4.5,
     deliveryTime: "35–40 min",
-    priceForTwo: 450,
+    
   },
   {
     id: 6,
@@ -63,7 +63,7 @@ export const kitchenData = [
     tagline: "Ghar ka khana, daily",
     rating: 4.2,
     deliveryTime: "20–25 min",
-    priceForTwo: 200,
+    
   },
   {
     id: 7,
@@ -74,7 +74,7 @@ export const kitchenData = [
     tagline: "Wrapped with love",
     rating: 4.1,
     deliveryTime: "15–20 min",
-    priceForTwo: 220,
+    
   },
   {
     id: 8,
@@ -85,7 +85,7 @@ export const kitchenData = [
     tagline: "Highway-style goodness",
     rating: 4.6,
     deliveryTime: "35–40 min",
-    priceForTwo: 380,
+   
   },
   {
     id: 9,
@@ -96,7 +96,7 @@ export const kitchenData = [
     tagline: "Crunch. Spice. Repeat.",
     rating: 4.3,
     deliveryTime: "25–30 min",
-    priceForTwo: 420,
+    
   },
   {
     id: 10,
@@ -107,6 +107,6 @@ export const kitchenData = [
     tagline: "End every meal sweet",
     rating: 4.7,
     deliveryTime: "20–25 min",
-    priceForTwo: 300,
+    
   },
 ];

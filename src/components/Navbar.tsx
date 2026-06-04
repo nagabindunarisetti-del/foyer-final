@@ -1,6 +1,5 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import {
   AppBar,
   Toolbar,
@@ -13,43 +12,78 @@ import {
   Divider,
   ListItemIcon,
   ListItemText,
+  TextField,
+  InputAdornment,
+  Badge,
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
-
 import {
-  DownloadOutlined,
+  Search,
+  LocationOn,
+  Language,
+  FavoriteBorder,
+  
+  ShoppingCartOutlined,
   PersonOutline,
   ShoppingBagOutlined,
   LocationOnOutlined,
   LogoutOutlined,
+  FavoriteBorderOutlined,
+  Close,
 } from '@mui/icons-material';
 
 const Navbar = () => {
-
   const navigate = useNavigate();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const [anchorEl, setAnchorEl] =
-    useState<null | HTMLElement>(null);
-
-  const handleMenuOpen = (
-    event: React.MouseEvent<HTMLElement>
-  ) => {
-
+  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
     setAnchorEl(event.currentTarget);
   };
 
   const handleMenuClose = () => {
+    timeoutRef.current = setTimeout(() => setAnchorEl(null), 200);
+  };
 
+  const handleMenuCloseImmediate = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
     setAnchorEl(null);
   };
 
-  const handleNavigate = (
-    path: string
-  ) => {
-
+  const handleNavigate = (path: string) => {
     navigate(path);
-
-    handleMenuClose();
+    handleMenuCloseImmediate();
+    setMobileMenuOpen(false);
   };
+
+  const handleLogout = () => {
+    handleMenuCloseImmediate();
+    navigate('/login');
+    setMobileMenuOpen(false);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
+
+  const menuItems = [
+    { label: 'My Account', path: '/my-account', icon: <PersonOutline /> },
+    { label: 'Orders', path: '/my-account/orders', icon: <ShoppingBagOutlined /> },
+    { label: 'Saved Addresses', path: '/my-account/addresses', icon: <LocationOnOutlined /> },
+    { label: 'Favourites', path: '/favorites', icon: <FavoriteBorderOutlined /> },
+  ];
 
   return (
     <>
@@ -59,251 +93,172 @@ const Navbar = () => {
         sx={{
           bgcolor: 'white',
           borderBottom: '1px solid',
-          borderColor:
-            'rgba(0, 0, 0, 0.05)',
+          borderColor: 'rgba(0, 0, 0, 0.05)',
         }}
       >
-
-        <Toolbar
-          sx={{
-            justifyContent:
-              'space-between',
-
-            px: {
-              xs: 3,
-              md: 6,
-            },
-          }}
-        >
-
+        <Toolbar sx={{ px: { xs: 1.5, md: 4 }, py: 1 }}>
           {/* Logo */}
-
-          <Typography
-            variant="h5"
-            onClick={() =>
-              navigate('/')
-            }
+          <Box
+            component="img"
+            src="https://cdn.freebiesupply.com/logos/thumbs/2x/foyer-1-logo.png"
+            alt="Foyer Logo"
+            onClick={() => navigate('/')}
             sx={{
-              fontFamily: 'Poppins',
-              fontWeight: 600,
-              letterSpacing: 1,
-              color: '#1a1a1a',
+              height: { xs: '40px', sm: '50px' },
               cursor: 'pointer',
-              fontSize: '1.75rem',
+              mr: { xs: 1, sm: 2 },
+            }}
+          />
 
-              '&:hover': {
-                opacity: 0.8,
+          {/* Location Button */}
+          <Button
+            startIcon={<LocationOn sx={{ color: '#106ebe', fontSize: { xs: 18, sm: 20 } }} />}
+            size="small"
+            sx={{
+              textTransform: 'none',
+              color: '#1a1a1a',
+              fontWeight: 500,
+              fontSize: { xs: '0.7rem', sm: '0.8rem' },
+              whiteSpace: 'nowrap',
+              minWidth: 'auto',
+              mr: { xs: 0.5, sm: 1 },
+            }}
+          >
+            {isMobile ? 'Gachibowli' : 'Gachibowli, Hyderabad'}
+          </Button>
+
+          {/* Search Bar */}
+          <TextField
+            placeholder={isMobile ? "Search..." : "Search for restaurants or dishes..."}
+            size="small"
+            sx={{
+              flex: 1,
+              mx: { xs: 0.5, sm: 1 },
+              '& .MuiOutlinedInput-root': {
+                borderRadius: 3,
+                bgcolor: '#f8f9fa',
+                height: { xs: 36, sm: 40 },
+              },
+              '& .MuiInputBase-input': {
+                fontSize: { xs: '0.8rem', sm: '0.9rem' },
+                py: { xs: 0.5, sm: 1 },
               },
             }}
-          >
-            Foyer
-          </Typography>
-
-          {/* Right Section */}
-
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 3,
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start" sx={{ mr: { xs: 0.5, sm: 1 } }}>
+                  <Search sx={{ color: '#999', fontSize: { xs: 18, sm: 20 } }} />
+                </InputAdornment>
+              ),
             }}
-          >
+          />
 
-            {/* Download Button */}
+          {/* Right Icons */}
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0.5, sm: 1 } }}>
+            
+            {!isMobile && (
+              <IconButton onClick={() => navigate('/favorites')}>
+                <FavoriteBorder sx={{ fontSize: { xs: 20, sm: 22 }, color: '#1a1a1a' }} />
+              </IconButton>
+            )}
 
-            <Button
-              component="a"
-              href="https://play.google.com/store/apps/details?id=com.pubg.imobile&hl=en-US"
-              target="_blank"
-              variant="contained"
-              startIcon={
-                <DownloadOutlined
-                  sx={{
-                    fontSize: 20,
-                  }}
-                />
-              }
-              sx={{
-                fontFamily: 'Poppins',
-                color: '#ffffff',
-                textTransform: 'none',
-                fontWeight: 500,
-                fontSize: '0.95rem',
-                bgcolor: '#106ebe',
+            
 
-                '&:hover': {
-                  bgcolor: '#0a58a1',
-                  color: '#ffffff',
-                  opacity: 0.9,
-                },
-              }}
-            >
-              Download Foyer
-            </Button>
-
-            {/* Profile Icon */}
-
-            <IconButton
-              onClick={handleMenuOpen}
-              sx={{
-                p: 0,
-
-                '&:hover': {
-                  opacity: 0.7,
-                },
-              }}
-            >
-
-              <PersonOutline
-                sx={{
-                  fontSize: 26,
-                  color: '#1a1a1a',
-                }}
-              />
-
+            {/* Cart Icon */}
+            <IconButton onClick={() => navigate('/cart')}>
+              <Badge badgeContent={0} color="primary">
+                <ShoppingCartOutlined sx={{ fontSize: { xs: 20, sm: 22 }, color: '#1a1a1a' }} />
+              </Badge>
             </IconButton>
 
-            {/* Dropdown Menu */}
-
-            <Menu
-              anchorEl={anchorEl}
-              open={Boolean(anchorEl)}
-              onClose={handleMenuClose}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right',
-              }}
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              PaperProps={{
-                elevation: 2,
-
-                sx: {
-                  mt: 2,
-                  minWidth: 200,
-                  borderRadius: 2,
-                  boxShadow:
-                    '0 8px 25px rgba(0, 0, 0, 0.08)',
-                },
-              }}
-            >
-
-              {/* PROFILE */}
-
-              <MenuItem
-                onClick={() =>
-                  handleNavigate(
-                    '/vieworders/profile'
-                  )
-                }
-                sx={{
-                  py: 1.2,
-                }}
-              >
-
-                <ListItemIcon>
-                  <PersonOutline
-                    sx={{
-                      fontSize: 20,
-                    }}
-                  />
-                </ListItemIcon>
-
-                <ListItemText primary="Profile" />
-
-              </MenuItem>
-
-              {/* ORDERS */}
-
-              <MenuItem
-                onClick={() =>
-                  handleNavigate(
-                    '/vieworders/orders'
-                  )
-                }
-                sx={{
-                  py: 1.2,
-                }}
-              >
-
-                <ListItemIcon>
-                  <ShoppingBagOutlined
-                    sx={{
-                      fontSize: 20,
-                    }}
-                  />
-                </ListItemIcon>
-
-                <ListItemText primary="Orders" />
-
-              </MenuItem>
-
-              {/* ADDRESSES */}
-
-              <MenuItem
-                onClick={() =>
-                  handleNavigate(
-                    '/vieworders/addresses'
-                  )
-                }
-                sx={{
-                  py: 1.2,
-                }}
-              >
-
-                <ListItemIcon>
-                  <LocationOnOutlined
-                    sx={{
-                      fontSize: 20,
-                    }}
-                  />
-                </ListItemIcon>
-
-                <ListItemText primary="Saved Addresses" />
-
-              </MenuItem>
-
-              <Divider sx={{ my: 0.5 }} />
-
-              {/* LOGOUT */}
-
-              <MenuItem
-                onClick={handleMenuClose}
-                sx={{
-                  py: 1.2,
-                  color: '#d32f2f',
-                }}
-              >
-
-                <ListItemIcon>
-
-                  <LogoutOutlined
-                    sx={{
-                      fontSize: 20,
-                      color: '#d32f2f',
-                    }}
-                  />
-
-                </ListItemIcon>
-
-                <ListItemText primary="Logout" />
-
-              </MenuItem>
-
-            </Menu>
-
+            {/* Profile Icon */}
+            {!isMobile ? (
+              <IconButton onMouseEnter={handleMenuOpen} onMouseLeave={handleMenuClose}>
+                <PersonOutline sx={{ fontSize: { xs: 20, sm: 22 }, color: '#1a1a1a' }} />
+              </IconButton>
+            ) : (
+              <IconButton onClick={() => setMobileMenuOpen(true)}>
+                <PersonOutline sx={{ fontSize: { xs: 20, sm: 22 }, color: '#1a1a1a' }} />
+              </IconButton>
+            )}
           </Box>
-
         </Toolbar>
 
+        {!isMobile && (
+          <Menu
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleMenuCloseImmediate}
+            onMouseEnter={() => {
+              if (timeoutRef.current) clearTimeout(timeoutRef.current);
+            }}
+            onMouseLeave={handleMenuClose}
+            PaperProps={{
+              sx: { mt: 1, minWidth: 180, borderRadius: 1.5, boxShadow: '0 4px 12px rgba(0,0,0,0.08)' },
+            }}
+          >
+            {menuItems.map((item) => (
+              <MenuItem key={item.label} onClick={() => handleNavigate(item.path)} sx={{ py: 0.8, px: 1.5 }}>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.label} />
+              </MenuItem>
+            ))}
+            <Divider />
+            <MenuItem onClick={handleLogout} sx={{ py: 0.8, px: 1.5, color: '#d32f2f' }}>
+              <ListItemIcon><LogoutOutlined sx={{ fontSize: 18, color: '#d32f2f' }} /></ListItemIcon>
+              <ListItemText primary="Logout" />
+            </MenuItem>
+          </Menu>
+        )}
       </AppBar>
 
-      {/* Toolbar Spacer */}
+      {/* Mobile Drawer Menu */}
+      <Drawer anchor="left" open={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)}>
+        <Box sx={{ width: 280, p: 2 }}>
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+            <IconButton onClick={() => setMobileMenuOpen(false)}>
+              <Close />
+            </IconButton>
+          </Box>
+          <List>
+            <ListItem disablePadding>
+              <ListItemButton>
+                <LocationOn sx={{ mr: 2, color: '#106ebe' }} />
+                <Typography>Gachibowli, Hyderabad</Typography>
+              </ListItemButton>
+            </ListItem>
 
-      <Box sx={{ height: 65 }} />
+            <ListItem disablePadding>
+              <ListItemButton>
+                <Language sx={{ mr: 2 }} />
+                <Typography>English</Typography>
+              </ListItemButton>
+            </ListItem>
 
+            <Divider sx={{ my: 1 }} />
+
+            {menuItems.map((item) => (
+              <ListItem key={item.label} disablePadding>
+                <ListItemButton onClick={() => handleNavigate(item.path)}>
+                  <ListItemIcon>{item.icon}</ListItemIcon>
+                  <ListItemText primary={item.label} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+
+            <Divider sx={{ my: 1 }} />
+
+            <ListItem disablePadding>
+              <ListItemButton onClick={handleLogout}>
+                <ListItemIcon><LogoutOutlined sx={{ color: '#d32f2f' }} /></ListItemIcon>
+                <ListItemText primary="Logout" primaryTypographyProps={{ color: '#d32f2f' }} />
+              </ListItemButton>
+            </ListItem>
+          </List>
+        </Box>
+      </Drawer>
+
+      <Box sx={{ height: { xs: 65, sm: 70, md: 70 } }} />
     </>
   );
 };

@@ -14,51 +14,257 @@ import {
 
 import {
   useNavigate,
+  useLocation
 } from "react-router-dom";
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-import CardComponent from "../components/Card";
-import CloudKitchenCard from "../components/CloudKitchenCard";
+import CloudKitchenCard from "../components/MainCard";
 import Cartbar from "../components/Cartbar";
 
-import { housewives } from "../data/housewives";
 import { kitchenData } from "../data/kitchenData";
 import { restaurantData } from "../data/restaurantData";
+import { homeChefData } from "../data/homeChefData";
 
+function HomeChefsSection() {
+  return (
+    <>
+      <Typography
+        sx={{
+          fontSize: {
+            xs: "20px",
+            md: "28px",
+          },
+          fontWeight: 700,
+          mb: 3,
+        }}
+      >
+        Home Chefs
+      </Typography>
+
+      <Box
+        sx={{
+          display: "grid",
+          width: "100%",
+          gridTemplateColumns: {
+            xs: "repeat(1, 1fr)",
+            sm: "repeat(2, 1fr)",
+            md: "repeat( 3, 1fr)",
+            lg: "repeat(4, 1fr)",
+          },
+          gap: {
+            xs: 1.5,
+            sm: 2,
+            md: 2.5,
+          },
+          alignItems: "stretch",
+        }}
+      >
+        {homeChefData.map((item) => (
+          <Box
+            key={`${item.type}-${item.id}`}
+            sx={{
+              width: "100%",
+              minWidth: 0,
+              overflow: "hidden",
+              display: "flex",
+            }}
+          >
+            <CloudKitchenCard item={item} />
+          </Box>
+        ))}
+      </Box>
+    </>
+  );
+}
+
+function CloudKitchenSection() {
+
+  const cloudKitchens = kitchenData.filter(
+    (item) => item.type === "cloudKitchen"
+  );
+
+  return (
+    <>
+      <Typography
+        sx={{
+          fontSize: {
+            xs: "20px",
+            md: "28px",
+          },
+          fontWeight: 700,
+          mb: 3,
+        }}
+      >
+        Cloud Kitchens
+      </Typography>
+
+      <Box
+        sx={{
+          display: "grid",
+          width: "100%",
+          gridTemplateColumns: {
+            xs: "repeat(1, 1fr)",
+            sm: "repeat(2, 1fr)",
+            md: "repeat(3, 1fr)",
+            lg: "repeat(4, 1fr)",
+          },
+          gap: {
+            xs: 1.5,
+            sm: 2,
+            md: 2.5,
+          },
+          alignItems: "stretch",
+        }}
+      >
+        {cloudKitchens.map((item) => (
+          <Box
+            key={`${item.type}-${item.id}`}
+            sx={{
+              width: "100%",
+              minWidth: 0,
+              overflow: "hidden",
+              display: "flex",
+            }}
+          >
+            <CloudKitchenCard item={item} />
+          </Box>
+        ))}
+      </Box>
+    </>
+  );
+}
+
+function RestaurantSection() {
+  return (
+    <>
+      <Typography
+        sx={{
+          fontSize: {
+            xs: "20px",
+            md: "28px",
+          },
+          fontWeight: 700,
+          mb: 3,
+        }}
+      >
+        Restaurants
+      </Typography>
+
+      <Box
+        sx={{
+          display: "grid",
+          width: "100%",
+          gridTemplateColumns: {
+            xs: "repeat(1, 1fr)",
+            sm: "repeat(2, 1fr)",
+            md: "repeat(3, 1fr)",
+            lg: "repeat(4, 1fr)",
+          },
+          gap: {
+            xs: 1.5,
+            sm: 2,
+            md: 2.5,
+          },
+          alignItems: "stretch",
+        }}
+      >
+        {restaurantData.map((item) => (
+          <Box
+            key={`${item.type}-${item.id}`}
+            sx={{
+              width: "100%",
+              minWidth: 0,
+              overflow: "hidden",
+              display: "flex",
+            }}
+          >
+            <CloudKitchenCard item={item} />
+          </Box>
+        ))}
+      </Box>
+    </>
+  );
+}
 function Ordernow() {
 
   const theme = useTheme();
 
   const navigate = useNavigate();
 
+  const location = useLocation();
+
+  const getInitialTab = () => {
+
+    const path = location.pathname;
+
+    if (
+      path.includes("/home-chefs") ||
+      path.includes("/homechef")
+    ) {
+      return "homeChef";
+    }
+
+    if (
+      path.includes("/cloud-kitchens") ||
+      path.includes("/cloudkitchen")
+    ) {
+      return "cloudKitchen";
+    }
+
+    if (
+      path.includes("/restaurants") ||
+      path.includes("/restaurant")
+    ) {
+      return "restaurant";
+    }
+
+    return "homeChef";
+  };
+
   const [section, setSection] = useState<
     "homeChef" |
     "cloudKitchen" |
     "restaurant"
-  >("homeChef");
+  >(getInitialTab());
 
-  const [cartItems, setCartItems] =
-    useState<any[]>(() => {
+  const [cartItems, setCartItems] = useState<any[]>(() => {
 
-      const saved =
-        localStorage.getItem(
-          "cartItems"
-        );
+    const saved =
+      localStorage.getItem("cartItems");
 
-      return saved
-        ? JSON.parse(saved)
-        : [];
-    });
+    return saved
+      ? JSON.parse(saved)
+      : [];
+  });
+  useEffect(() => {
+    setSection(getInitialTab());
+  }, [location.pathname]);
 
+  useEffect(() => {
+
+    if (section) {
+
+      setCartItems([]);
+
+      localStorage.removeItem("cartItems");
+
+      window.dispatchEvent(
+        new Event("cartUpdated")
+      );
+
+      window.dispatchEvent(
+        new Event("foodAdded")
+      );
+    }
+
+  }, [section]);
   useEffect(() => {
 
     const syncCart = () => {
 
       const updatedCart =
-        localStorage.getItem(
-          "cartItems"
-        );
+        localStorage.getItem("cartItems");
 
       setCartItems(
         updatedCart
@@ -94,129 +300,38 @@ function Ordernow() {
 
   }, []);
 
-  const addToCart = (item: any) => {
+  const handleTabChange = (
+    event: React.SyntheticEvent,
+    newValue: string
+  ) => {
 
-    let updatedCart = [...cartItems];
+    setSection(newValue as any);
 
-    if (section === "homeChef") {
-
-      const existingItem =
-        updatedCart.find(
-          (cartItem) =>
-            cartItem.id === item.id
-        );
-
-      if (existingItem) {
-
-        updatedCart = updatedCart.map(
-          (cartItem) =>
-
-            cartItem.id === item.id
-
-              ? {
-                  ...cartItem,
-
-                  quantity:
-                    cartItem.quantity + 1,
-                }
-
-              : cartItem
-        );
-
-      } else {
-
-        updatedCart = [
-          {
-            ...item,
-
-            quantity: 1,
-          },
-        ];
-      }
-
-    } else {
-
-      const existingItem =
-        updatedCart.find(
-          (cartItem) =>
-
-            cartItem.id === item.id &&
-
-            cartItem.type === item.type
-        );
-
-      if (existingItem) {
-
-        updatedCart = updatedCart.map(
-          (cartItem) =>
-
-            cartItem.id === item.id &&
-
-            cartItem.type === item.type
-
-              ? {
-                  ...cartItem,
-
-                  quantity:
-                    cartItem.quantity + 1,
-                }
-
-              : cartItem
-        );
-
-      } else {
-
-        updatedCart = [
-          ...updatedCart,
-
-          {
-            ...item,
-
-            quantity: 1,
-          },
-        ];
-      }
+    if (newValue === "homeChef") {
+      navigate("/home-chefs");
     }
 
-    setCartItems(updatedCart);
+    else if (newValue === "cloudKitchen") {
+      navigate("/cloud-kitchens");
+    }
 
-    localStorage.setItem(
-      "cartItems",
-      JSON.stringify(updatedCart)
-    );
-
-    window.dispatchEvent(
-      new Event("cartUpdated")
-    );
+    else if (newValue === "restaurant") {
+      navigate("/restaurants");
+    }
   };
 
-  const displayData =
-    section === "homeChef"
-      ? housewives
-      : section === "cloudKitchen"
-      ? kitchenData
-      : restaurantData;
-
-  const tabStyles = (
-    value: string
-  ) => ({
+  const tabStyles = (value: string) => ({
     minHeight: "42px",
-
     minWidth:
       value === "cloudKitchen"
         ? "150px"
         : "130px",
 
     px: 2.5,
-
     mr: 1,
-
     mb: 1,
-
     borderRadius: "14px",
-
     textTransform: "none",
-
     fontWeight: 700,
 
     fontSize: {
@@ -225,13 +340,10 @@ function Ordernow() {
     },
 
     backgroundColor: "#fff",
-
     color: "#666",
 
     border: "none !important",
-
     outline: "none !important",
-
     boxShadow: "none !important",
 
     "&.Mui-selected": {
@@ -261,20 +373,22 @@ function Ordernow() {
     },
   });
 
+
   return (
 
     <Box
       sx={{
         width: "100%",
-
         minHeight: "100vh",
 
         backgroundColor:
           theme.palette.background.default,
+        mt: 6,
 
         px: {
           xs: 2,
           md: 6,
+
         },
 
         py: {
@@ -283,70 +397,101 @@ function Ordernow() {
         },
 
         pb: 12,
-
         overflowX: "hidden",
       }}
     >
+      {section === "homeChef" && (
+        <Box
+          sx={{
+            textAlign: "center",
 
-      {/* BACK BUTTON */}
+            maxWidth: "900px",
 
-      <Button
-        startIcon={<ArrowBackIcon />}
-        variant="outlined"
-        onClick={() =>
-          navigate("/")
-        }
-        sx={{
-          mb: 3,
+            mx: "auto",
 
-          borderRadius: 3,
+            mb: {
+              xs: 3,
+              md: 5,
+            },
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: {
+                xs: "24px",
+                sm: "32px",
+                md: "38px",
+              },
 
-          textTransform: "none",
+              fontWeight: 800,
 
-          fontWeight: 700,
+              lineHeight: 1.2,
 
-          px: 2.5,
+              color: "#1e293b",
 
-          py: 1,
-        }}
-      >
-        Back To Home
-      </Button>
+              mb: 2,
+            }}
+          >
+            Real food from real kitchens,
+            made with love
+          </Typography>
 
-      {/* TITLE */}
+          <Typography
+            sx={{
+              fontSize: {
+                xs: "14px",
+                sm: "16px",
+                md: "16px",
+              },
 
+              lineHeight: 1.8,
+
+              color: "#606771",
+
+              px: {
+                xs: 1,
+                sm: 2,
+              },
+            }}
+          >
+            Foyer is the home of
+            home-cooks — bringing
+            wholesome, hygienic,
+            mom-style meals to your
+            door. Discover authentic
+            flavors prepared in clean
+            home kitchens — perfect
+            for daily meals, weekly
+            tiffins, or special
+            occasions.
+          </Typography>
+        </Box>
+      )}
       <Typography
         sx={{
+          textAlign: "center",
           fontSize: {
             xs: "26px",
             md: "38px",
+
           },
 
           fontWeight: 800,
-
           mb: 3,
         }}
       >
         Order Fresh Food
       </Typography>
-
-      {/* TABS */}
-
       <Box
         sx={{
           mb: 4,
-
           width: "100%",
         }}
       >
 
         <Tabs
           value={section}
-
-          onChange={(_, v) =>
-            setSection(v)
-          }
-
+          onChange={handleTabChange}
           variant="standard"
 
           sx={{
@@ -356,16 +501,14 @@ function Ordernow() {
               display: "none",
             },
 
-            "& .MuiTabs-flexContainer":
-              {
-                flexWrap: "wrap",
-
-                alignItems: "center",
-              },
+            "& .MuiTabs-flexContainer": {
+              flexWrap: "wrap",
+              alignItems: "center",
+              justifyContent: "center",
+            },
 
             "& .MuiTab-root": {
               outline: "none",
-
               border: "none",
             },
           }}
@@ -380,133 +523,33 @@ function Ordernow() {
           <Tab
             value="cloudKitchen"
             label="Cloud Kitchens"
-            sx={tabStyles(
-              "cloudKitchen"
-            )}
+            sx={tabStyles("cloudKitchen")}
           />
 
           <Tab
             value="restaurant"
             label="Restaurants"
-            sx={tabStyles(
-              "restaurant"
-            )}
+            sx={tabStyles("restaurant")}
           />
 
         </Tabs>
 
       </Box>
 
-      {/* SECTION TITLE */}
+      {section === "homeChef" && (
+        <HomeChefsSection />
+      )}
 
-      <Typography
-        sx={{
-          fontSize: {
-            xs: "20px",
-            md: "28px",
-          },
+      {section === "cloudKitchen" && (
+        <CloudKitchenSection />
+      )}
 
-          fontWeight: 700,
-
-          mb: 3,
-        }}
-      >
-
-        {section === "homeChef" &&
-          "Home Chefs"}
-
-        {section === "cloudKitchen" &&
-          "Cloud Kitchens"}
-
-        {section === "restaurant" &&
-          "Restaurants"}
-
-      </Typography>
-
-      {/* CARDS */}
-
-      <Box
-        sx={{
-          display: "grid",
-
-          width: "100%",
-
-          gridTemplateColumns:
-            section === "homeChef"
-              ? {
-                  xs: "repeat(2, 1fr)",
-
-                  sm: "repeat(3, 1fr)",
-
-                  md: "repeat(5, 1fr)",
-                }
-              : {
-                  xs: "repeat(1, 1fr)",
-
-                  sm: "repeat(2, 1fr)",
-
-                  md: "repeat(3, 1fr)",
-                },
-
-          gap: {
-            xs: 1.5,
-            sm: 2,
-            md: 3,
-          },
-
-          alignItems: "stretch",
-
-          overflow: "hidden",
-        }}
-      >
-
-        {displayData.map((item) => (
-
-          <Box
-            key={`${item.type}-${item.id}`}
-
-            sx={{
-              width: "100%",
-
-              minWidth: 0,
-
-              overflow: "hidden",
-
-              display: "flex",
-            }}
-          >
-
-            {section ===
-            "homeChef" ? (
-
-              <CardComponent
-                item={item}
-                onAdd={addToCart}
-                section={section}
-              />
-
-            ) : (
-
-              <CloudKitchenCard
-                item={item}
-                section={section}
-              />
-
-            )}
-
-          </Box>
-
-        ))}
-
-      </Box>
-
-      {/* CARTBAR */}
-
+      {section === "restaurant" && (
+        <RestaurantSection />
+      )}
       <Cartbar
         cartItems={cartItems}
-        setCartItems={
-          setCartItems
-        }
+        setCartItems={setCartItems}
       />
 
     </Box>

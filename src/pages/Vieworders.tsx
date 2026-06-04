@@ -36,8 +36,6 @@ const Vieworder = () => {
   const { section } =
     useParams();
 
-  /* DEFAULT OPEN ORDERS TAB */
-
   const [active, setActive] =
     useState(
       section || "orders"
@@ -52,16 +50,12 @@ const Vieworder = () => {
 
   }, [section]);
 
-  /* PROFILE */
-
   const [formData, setFormData] =
     useState({
       name: "",
       email: "",
       mobile: "",
     });
-
-  /* ORDERS */
 
   const [orders, setOrders] =
     useState<any[]>([]);
@@ -82,8 +76,6 @@ const Vieworder = () => {
 
   }, []);
 
-  /* ADDRESSES */
-
   const [addresses, setAddresses] =
     useState([
       "Hyderabad, Telangana",
@@ -93,12 +85,8 @@ const Vieworder = () => {
   const [newAddress, setNewAddress] =
     useState("");
 
-  /* SNACKBAR */
-
   const [openSnackbar, setOpenSnackbar] =
     useState(false);
-
-  /* HANDLE INPUT */
 
   const handleChange = (e: any) => {
 
@@ -109,8 +97,6 @@ const Vieworder = () => {
         e.target.value,
     });
   };
-
-  /* SAVE PROFILE */
 
   const handleSave = () => {
 
@@ -128,8 +114,6 @@ const Vieworder = () => {
     setOpenSnackbar(true);
   };
 
-  /* ADD ADDRESS */
-
   const addAddress = () => {
 
     if (newAddress.trim()) {
@@ -142,8 +126,6 @@ const Vieworder = () => {
       setNewAddress("");
     }
   };
-
-  /* DELETE ADDRESS */
 
   const deleteAddress = (
     index: number
@@ -171,7 +153,7 @@ const Vieworder = () => {
 
         px: 2,
 
-        py: 4,
+        py: 10,
       }}
     >
 
@@ -196,8 +178,6 @@ const Vieworder = () => {
             "0 8px 30px rgba(0,0,0,0.06)",
         }}
       >
-
-        {/* HEADER */}
 
         <Box
           sx={{
@@ -256,12 +236,10 @@ const Vieworder = () => {
               textTransform: "none",
             }}
           >
-            Back to Home
+            Back To Home
           </Button>
 
         </Box>
-
-        {/* TABS */}
 
         <Box
           sx={{
@@ -274,7 +252,7 @@ const Vieworder = () => {
             backgroundColor:
               theme.palette.grey[100],
 
-            p: 0.7,
+            p:0.7,
 
             borderRadius: 3,
           }}
@@ -332,8 +310,6 @@ const Vieworder = () => {
           ))}
 
         </Box>
-
-        {/* PROFILE */}
 
         {active === "profile" && (
 
@@ -420,8 +396,6 @@ const Vieworder = () => {
           </Paper>
         )}
 
-        {/* ORDERS */}
-
         {active === "orders" && (
 
           <Paper
@@ -484,8 +458,6 @@ const Vieworder = () => {
                       }}
                     >
 
-                      {/* LEFT */}
-
                       <Box>
 
                         <Typography
@@ -527,8 +499,6 @@ const Vieworder = () => {
 
                       </Box>
 
-                      {/* RIGHT */}
-
                       <Typography
                         sx={{
                           fontWeight: 700,
@@ -567,8 +537,6 @@ const Vieworder = () => {
 
           </Paper>
         )}
-
-        {/* ADDRESSES */}
 
         {active === "addresses" && (
 
@@ -727,9 +695,6 @@ const Vieworder = () => {
         )}
 
       </Box>
-
-      {/* SNACKBAR */}
-
       <Snackbar
         open={openSnackbar}
         autoHideDuration={2000}

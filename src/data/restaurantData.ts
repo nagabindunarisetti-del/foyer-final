@@ -1,6 +1,6 @@
 export const restaurantData = [
   {
-    id: 101,
+    id: 1,
     type: "restaurant",
     name: "Urban Tandoor",
     image:
@@ -9,11 +9,11 @@ export const restaurantData = [
     tagline: "Smoky grills & rich curries",
     rating: 4.7,
     deliveryTime: "35–40 min",
-    priceForTwo: 500,
+   
   },
 
   {
-    id: 102,
+    id: 2,
     type: "restaurant",
     name: "The Coastal Bay",
     image:
@@ -22,11 +22,11 @@ export const restaurantData = [
     tagline: "Fresh catch, bold spices",
     rating: 4.6,
     deliveryTime: "40–45 min",
-    priceForTwo: 600,
+    
   },
 
   {
-    id: 103,
+    id: 3,
     type: "restaurant",
     name: "Street Masala",
     image:
@@ -35,11 +35,11 @@ export const restaurantData = [
     tagline: "Gully flavors, premium taste",
     rating: 4.4,
     deliveryTime: "25–30 min",
-    priceForTwo: 300,
+   
   },
 
   {
-    id: 104,
+    id: 4,
     type: "restaurant",
     name: "BBQ Nation Express",
     image:
@@ -48,11 +48,11 @@ export const restaurantData = [
     tagline: "Grill it the right way",
     rating: 4.8,
     deliveryTime: "40–50 min",
-    priceForTwo: 700,
+    
   },
 
   {
-    id: 105,
+    id: 5,
     type: "restaurant",
     name: "Cafe Mocha House",
     image:
@@ -61,11 +61,11 @@ export const restaurantData = [
     tagline: "Food. Coffee. Comfort.",
     rating: 4.5,
     deliveryTime: "30–35 min",
-    priceForTwo: 450,
+   
   },
 
   {
-    id: 106,
+    id: 6,
     type: "restaurant",
     name: "Royal Nawabs",
     image:
@@ -74,11 +74,11 @@ export const restaurantData = [
     tagline: "Legacy of Nawabi taste",
     rating: 4.6,
     deliveryTime: "45–50 min",
-    priceForTwo: 650,
+    
   },
 
   {
-    id: 107,
+    id: 7,
     type: "restaurant",
     name: "The Pizza Yard",
     image:
@@ -87,11 +87,11 @@ export const restaurantData = [
     tagline: "Stone baked perfection",
     rating: 4.3,
     deliveryTime: "30–35 min",
-    priceForTwo: 500,
+   
   },
 
   {
-    id: 108,
+    id: 8,
     type: "restaurant",
     name: "Spice Symphony",
     image:
@@ -100,11 +100,11 @@ export const restaurantData = [
     tagline: "Where spices sing",
     rating: 4.9,
     deliveryTime: "50–55 min",
-    priceForTwo: 900,
+   
   },
 
   {
-    id: 109,
+    id: 9,
     type: "restaurant",
     name: "Noodle Bar",
     image:
@@ -113,11 +113,11 @@ export const restaurantData = [
     tagline: "Slurp-worthy bowls",
     rating: 4.4,
     deliveryTime: "25–30 min",
-    priceForTwo: 350,
+    
   },
 
   {
-    id: 110,
+    id: 10,
     type: "restaurant",
     name: "The Breakfast Club",
     image:
@@ -126,6 +126,6 @@ export const restaurantData = [
     tagline: "Mornings done right",
     rating: 4.5,
     deliveryTime: "20–25 min",
-    priceForTwo: 280,
+    
   },
 ];

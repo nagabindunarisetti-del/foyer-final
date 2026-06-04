@@ -1,5 +1,6 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import Navbar from './Navbar';
+import CategoryNavbar from './CategoryNavbar';
 import Footer from './Footer';
 
 const Layout = () => {
@@ -12,6 +13,7 @@ const Layout = () => {
   return (
     <>
       {showNavbar && <Navbar />}
+       {showNavbar && <CategoryNavbar />}
       <main>
         <Outlet />
       </main>
