@@ -4,7 +4,6 @@ import {
   Chip,
   Button,
   useTheme,
-  IconButton,
 } from "@mui/material";
 
 import {
@@ -20,8 +19,7 @@ import {
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+
 
 import { cloudKitchenMenuData } from "../data/cloudKitchenMenuData";
 import { kitchenData } from "../data/kitchenData";
@@ -57,53 +55,10 @@ const CloudKitchenMenuPage = () => {
     });
   const [selectedFilter, setSelectedFilter] =
     useState("All");
-  const [favorites, setFavorites] =
-    useState<any[]>(() => {
-      const saved =
-        localStorage.getItem(
-          "cloud_favorites"
-        );
+ 
+  
 
-      return saved
-        ? JSON.parse(saved)
-        : [];
-    });
-  const toggleFavorite = (
-    food: any
-  ) => {
-    let updatedFavorites =
-      [];
-
-    const existingFavorite =
-      favorites.find(
-        (item: any) =>
-          item.id === food.id
-      );
-
-    if (existingFavorite) {
-      updatedFavorites =
-        favorites.filter(
-          (item: any) =>
-            item.id !== food.id
-        );
-    } else {
-      updatedFavorites = [
-        ...favorites,
-        food,
-      ];
-    }
-
-    setFavorites(
-      updatedFavorites
-    );
-
-    localStorage.setItem(
-      "cloud_favorites",
-      JSON.stringify(
-        updatedFavorites
-      )
-    );
-  };
+   
   useEffect(() => {
     const syncCart = () => {
       const updatedCart =
@@ -696,77 +651,6 @@ const CloudKitchenMenuPage = () => {
                         "cover",
                     }}
                   />
-                  <IconButton
-                    onClick={() =>
-                      toggleFavorite(
-                        food
-                      )
-                    }
-                    sx={{
-                      position:
-                        "absolute",
-
-                      top: 8,
-                      right: 8,
-
-                      background:
-                        "#fff",
-
-                      boxShadow:
-                        "0 2px 10px rgba(0,0,0,0.08)",
-
-                      width: {
-                        xs: 30,
-                        sm: 34,
-                      },
-
-                      height:
-                        {
-                          xs: 30,
-                          sm: 34,
-                        },
-
-                      "&:hover":
-                        {
-                          background:
-                            "#fff",
-                        },
-                    }}
-                  >
-                    {favorites.some(
-                      (
-                        item: any
-                      ) =>
-                        item.id ===
-                        food.id
-                    ) ? (
-                      <FavoriteIcon
-                        sx={{
-                          color:
-                            "#ef4444",
-
-                          fontSize:
-                            {
-                              xs: 18,
-                              sm: 20,
-                            },
-                        }}
-                      />
-                    ) : (
-                      <FavoriteBorderIcon
-                        sx={{
-                          color:
-                            "#374151",
-
-                          fontSize:
-                            {
-                              xs: 18,
-                              sm: 20,
-                            },
-                        }}
-                      />
-                    )}
-                  </IconButton>
                 </Box>
                 <Box
                   p={{

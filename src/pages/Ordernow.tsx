@@ -19,7 +19,7 @@ import {
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-import CloudKitchenCard from "../components/MainCard";
+import MainCard from "../components/MainCard";
 import Cartbar from "../components/Cartbar";
 
 import { kitchenData } from "../data/kitchenData";
@@ -70,7 +70,7 @@ function HomeChefsSection() {
               display: "flex",
             }}
           >
-            <CloudKitchenCard item={item} />
+            <MainCard item={item} />
           </Box>
         ))}
       </Box>
@@ -127,7 +127,7 @@ function CloudKitchenSection() {
               display: "flex",
             }}
           >
-            <CloudKitchenCard item={item} />
+            <MainCard item={item} />
           </Box>
         ))}
       </Box>
@@ -179,7 +179,7 @@ function RestaurantSection() {
               display: "flex",
             }}
           >
-            <CloudKitchenCard item={item} />
+            <MainCard item={item} />
           </Box>
         ))}
       </Box>
